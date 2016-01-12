@@ -47,3 +47,10 @@
 Module.symvers
 modules.order
 .tmp_versions/
+
+## compressed files
+*.zip
+*.tar
+*.tar.gz
+*.tar.bz2
+
