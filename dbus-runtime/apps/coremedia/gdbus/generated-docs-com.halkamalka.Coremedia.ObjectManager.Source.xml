@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+]>
+<refentry id="gdbus-com.halkamalka.Coremedia.ObjectManager.Source">
+  <refmeta>    <refentrytitle role="top_of_page" id="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-Source.top_of_page">com.halkamalka.Coremedia.ObjectManager.Source</refentrytitle>
+  <indexterm zone="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-Source.top_of_page"><primary sortas="Source">com.halkamalka.Coremedia.ObjectManager.Source</primary></indexterm>
+  </refmeta>  <refnamediv>    <refname>com.halkamalka.Coremedia.ObjectManager.Source</refname>    <refpurpose></refpurpose>  </refnamediv>  <refsynopsisdiv role="synopsis">
+    <title role="synopsis.title">Methods</title>
+    <synopsis>
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Prepare">Prepare</link>           ();
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Start">Start</link>             ();
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Stop">Stop</link>              ();
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.RequestPidChannel">RequestPidChannel</link> (IN  q pid,
+                   OUT t pidChannelHandle);
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.ReleasePidChannel">ReleasePidChannel</link> (IN  t pidChannelHandle);
+</synopsis>
+  </refsynopsisdiv>
+  <refsect1 role="properties">
+    <title role="properties.title">Properties</title>
+    <synopsis>
+<link linkend="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Source.Status">Status</link>      readwrite  s
+<link linkend="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Source.DataSource">DataSource</link>  readwrite  s
+</synopsis>
+  </refsect1>
+<refsect1 role="desc" id="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-Source">
+  <title role="desc.title">Description</title>
+  <para></para>
+</refsect1>
+<refsect1 role="details" id="gdbus-methods-com.halkamalka.Coremedia.ObjectManager.Source">
+  <title role="details.title">Method Details</title>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Prepare">
+  <title>The Prepare() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Prepare"><primary sortas="Source.Prepare">com.halkamalka.Coremedia.ObjectManager.Source.Prepare()</primary></indexterm>
+<programlisting>
+Prepare ();
+</programlisting>
+<para></para>
+</refsect2>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Start">
+  <title>The Start() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Start"><primary sortas="Source.Start">com.halkamalka.Coremedia.ObjectManager.Source.Start()</primary></indexterm>
+<programlisting>
+Start ();
+</programlisting>
+<para></para>
+</refsect2>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Stop">
+  <title>The Stop() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.Stop"><primary sortas="Source.Stop">com.halkamalka.Coremedia.ObjectManager.Source.Stop()</primary></indexterm>
+<programlisting>
+Stop ();
+</programlisting>
+<para></para>
+</refsect2>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.RequestPidChannel">
+  <title>The RequestPidChannel() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.RequestPidChannel"><primary sortas="Source.RequestPidChannel">com.halkamalka.Coremedia.ObjectManager.Source.RequestPidChannel()</primary></indexterm>
+<programlisting>
+RequestPidChannel (IN  q pid,
+                   OUT t pidChannelHandle);
+</programlisting>
+<para></para>
+<variablelist role="params">
+<varlistentry>
+  <term><literal>IN q <parameter>pid</parameter></literal>:</term>
+  <listitem><para></para></listitem>
+</varlistentry>
+<varlistentry>
+  <term><literal>OUT t <parameter>pidChannelHandle</parameter></literal>:</term>
+  <listitem><para></para></listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.ReleasePidChannel">
+  <title>The ReleasePidChannel() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Source.ReleasePidChannel"><primary sortas="Source.ReleasePidChannel">com.halkamalka.Coremedia.ObjectManager.Source.ReleasePidChannel()</primary></indexterm>
+<programlisting>
+ReleasePidChannel (IN  t pidChannelHandle);
+</programlisting>
+<para></para>
+<variablelist role="params">
+<varlistentry>
+  <term><literal>IN t <parameter>pidChannelHandle</parameter></literal>:</term>
+  <listitem><para></para></listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+</refsect1>
+<refsect1 role="details" id="gdbus-properties-com.halkamalka.Coremedia.ObjectManager.Source">
+  <title role="details.title">Property Details</title>
+<refsect2 role="property" id="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Source.Status">
+  <title>The "Status" property</title>
+  <indexterm zone="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Source.Status"><primary sortas="Source:Status">com.halkamalka.Coremedia.ObjectManager.Source:Status</primary></indexterm>
+<programlisting>
+Status  readwrite  s
+</programlisting>
+<para></para>
+</refsect2>
+<refsect2 role="property" id="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Source.DataSource">
+  <title>The "DataSource" property</title>
+  <indexterm zone="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Source.DataSource"><primary sortas="Source:DataSource">com.halkamalka.Coremedia.ObjectManager.Source:DataSource</primary></indexterm>
+<programlisting>
+DataSource  readwrite  s
+</programlisting>
+<para></para>
+</refsect2>
+</refsect1>
+</refentry>
+

@@ -1,0 +1,10 @@
+prefix=/home/erato/src/temp/_psip/libdvbsi++
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libdvbsi++
+Description: C++ parsing library for Service Information (SI) in DVB systems
+Version: 0.3.7
+Libs: -L${libdir} -ldvbsi++
+Cflags: -I${includedir}

@@ -1,0 +1,45 @@
+<node>
+  <interface name="com.halkamalka.Coremedia.ObjectManager.SourcePool">
+  		<method name="Request">
+  			<arg direction="in" type="s" name="dataSource"/>
+		</method>
+		<method name="Release">
+  			<arg direction="in" type="s" name="dataSource"/>
+		</method>
+  </interface>
+  <interface name="com.halkamalka.Coremedia.ObjectManager.SinkPool">
+  		<method name="Request">
+  			<arg direction="in" type="s" name="dataSource"/>
+		</method>
+		<method name="Release">
+  			<arg direction="in" type="s" name="dataSource"/>
+		</method>
+  </interface>
+  <interface name="com.halkamalka.Coremedia.ObjectManager.Source">
+  		<property name="Status" type="s" access="readwrite"/>
+  		<property name="DataSource" type="s" access="readwrite"/>
+  		<method name="Prepare">
+		</method>
+ 		<method name="Start">
+		</method>
+		<method name="Stop">
+		</method>
+		<method name="RequestPidChannel">
+		 	<arg direction="in" type="q" name="pid"/>
+		 	<arg direction="out" type="t" name="pidChannelHandle"/>
+		</method>
+		<method name="ReleasePidChannel">
+		 	<arg direction="in" type="t" name="pidChannelHandle"/>
+		</method>
+  </interface>
+  <interface name="com.halkamalka.Coremedia.ObjectManager.Sink">
+  		<property name="Status" type="s" access="readwrite"/>
+  		<property name="DataSink" type="s" access="readwrite"/>
+  		<method name="Prepare">
+		</method>
+ 		<method name="Start">
+		</method>
+		<method name="Stop">
+		</method>
+  </interface>
+</node>

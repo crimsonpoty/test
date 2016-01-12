@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+]>
+<refentry id="gdbus-com.halkamalka.Coremedia.ObjectManager.SinkPool">
+  <refmeta>    <refentrytitle role="top_of_page" id="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-SinkPool.top_of_page">com.halkamalka.Coremedia.ObjectManager.SinkPool</refentrytitle>
+  <indexterm zone="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-SinkPool.top_of_page"><primary sortas="SinkPool">com.halkamalka.Coremedia.ObjectManager.SinkPool</primary></indexterm>
+  </refmeta>  <refnamediv>    <refname>com.halkamalka.Coremedia.ObjectManager.SinkPool</refname>    <refpurpose></refpurpose>  </refnamediv>  <refsynopsisdiv role="synopsis">
+    <title role="synopsis.title">Methods</title>
+    <synopsis>
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-SinkPool.Request">Request</link> (IN  s dataSource);
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-SinkPool.Release">Release</link> (IN  s dataSource);
+</synopsis>
+  </refsynopsisdiv>
+<refsect1 role="desc" id="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-SinkPool">
+  <title role="desc.title">Description</title>
+  <para></para>
+</refsect1>
+<refsect1 role="details" id="gdbus-methods-com.halkamalka.Coremedia.ObjectManager.SinkPool">
+  <title role="details.title">Method Details</title>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-SinkPool.Request">
+  <title>The Request() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-SinkPool.Request"><primary sortas="SinkPool.Request">com.halkamalka.Coremedia.ObjectManager.SinkPool.Request()</primary></indexterm>
+<programlisting>
+Request (IN  s dataSource);
+</programlisting>
+<para></para>
+<variablelist role="params">
+<varlistentry>
+  <term><literal>IN s <parameter>dataSource</parameter></literal>:</term>
+  <listitem><para></para></listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-SinkPool.Release">
+  <title>The Release() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-SinkPool.Release"><primary sortas="SinkPool.Release">com.halkamalka.Coremedia.ObjectManager.SinkPool.Release()</primary></indexterm>
+<programlisting>
+Release (IN  s dataSource);
+</programlisting>
+<para></para>
+<variablelist role="params">
+<varlistentry>
+  <term><literal>IN s <parameter>dataSource</parameter></literal>:</term>
+  <listitem><para></para></listitem>
+</varlistentry>
+</variablelist>
+</refsect2>
+</refsect1>
+</refentry>
+

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Run the autotools bootstrap sequence to create the configure script
+# Abort execution on error
+# bootstrap the autotools
+
+(
+aclocal
+autoconf
+autoheader
+automake --add-missing --copy
+)
+
+echo "Bootstrap complete. Quick build instructions:"
+echo "./configure ...."
+

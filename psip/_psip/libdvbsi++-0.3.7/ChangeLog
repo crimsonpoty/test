@@ -1,0 +1,1005 @@
+commit f3c5e6c83734e0e86fdb8329339561ab600634a8
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Mon Sep 23 22:37:15 2013 +0200
+
+    set version to 0.3.7
+
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit e503fc2bab976f3b0c7e7898deea50bcdfc0bbd6
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Mon Sep 23 22:39:38 2013 +0200
+
+    regenerate Makefile.ams
+
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 7acedb84ba5480fc4ab4d93240e4677a1c972009
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Mon Sep 23 22:38:52 2013 +0200
+
+    genmakefileam: force C locale
+
+ 1 file changed, 2 insertions(+)
+
+commit a31010ad3c597c0dbe3326a6b1b7a8339bcc6043
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Mon Sep 23 21:14:27 2013 +0200
+
+    EnhancedAC3Descriptor: don't include mixInfoExistsFlag in calculation of header length
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 49b0c78a0b0db3efd0a49c4cf2fc1c7f4bf21c15
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Sat Mar 10 12:22:42 2012 +0100
+
+    set version to 0.3.6
+
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit bf0c2bb7b326b93713629dbf74f63a0a54ffe59d
+Author: ghost <andreas.monzner@dream-property.net>
+Date:   Thu Oct 6 13:27:04 2011 +0200
+
+    add some descriptors needed for hbbtv - simple application location descriptor - application usage descriptor - simple application boundary descriptor - graphics constraints descriptor
+
+ 12 files changed, 291 insertions(+)
+
+commit 345101a917400824a7ede3741485e57ab6d436df
+Author: ghost <andreas.monzner@dream-property.net>
+Date:   Thu Oct 6 09:38:40 2011 +0200
+
+    fixed application name descriptor
+
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit a7ba9009caff0302c41b6bd24cc62cf0fcde37ad
+Author: ghost <andreas.monzner@dream-property.net>
+Date:   Thu Oct 6 09:38:27 2011 +0200
+
+    fixed application information section
+
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit b2d294032b7cc17e532c5700f0b5fbd6254e140a
+Author: ghost <andreas.monzner@dream-property.net>
+Date:   Thu Oct 6 09:37:55 2011 +0200
+
+    fixed transport protocol descriptor
+
+ 2 files changed, 74 insertions(+), 28 deletions(-)
+
+commit 8fd25aeb7f8b2bdc14af5f0fe8bd99ced862f3f5
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Fri Sep 16 12:49:22 2011 +0200
+
+    configure.ac: fix typo in LT_INIT fallback
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 06ee9233007e20d429577a010b049215fe1c3c95
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Wed Nov 24 19:18:09 2010 +0100
+
+    update .gitignore
+
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+commit 15d8361bb876e5639d053f167f46920538bf2f85
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Wed Nov 24 19:16:34 2010 +0100
+
+    update build scripts
+
+ 8 files changed, 37 insertions(+), 1628 deletions(-)
+
+commit 7cfe8fbf6b98d0373223eb4e0a8ef4912934afa5
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Wed Nov 24 18:54:57 2010 +0100
+
+    updated debian scripts
+
+ 6 files changed, 31 insertions(+), 103 deletions(-)
+
+commit 4c0895164bb1f282f00cc2b39ae29a676f3247cb
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Wed Nov 24 18:36:06 2010 +0100
+
+    README: remove reference to CVS, as the CVS history is now imported into Git
+
+ 1 file changed, 5 deletions(-)
+
+commit 4fd279a0cb42e05fee4bca7b0ca3086147f4aafe
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Wed Nov 24 18:35:50 2010 +0100
+
+    remove .cvsignore files
+
+ 6 files changed, 9 deletions(-)
+
+commit edf8b60a545c2ea85c013691fcc4e58ad2b22727
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Wed Feb 24 19:45:08 2010 +0000
+
+    debian: make lintian happy
+
+ 4 files changed, 16 insertions(+), 6 deletions(-)
+
+commit 0d90d421e68622ee194f726cc7040e0b4e6fb35d
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Wed Feb 24 19:44:25 2010 +0000
+
+    configure.ac: increase LT_CURRENT to match debian package name
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 22ecd10383f9052fddbae3635f06fcc71691bc1b
+Author: Andreas Oberritter <obi@opendreambox.org>
+Date:   Thu Jan 28 23:12:11 2010 +0000
+
+    Added AC_PROG_LIBTOOL to fix build on lenny
+
+ 1 file changed, 1 insertion(+)
+
+commit 3196e9c54bf71181cfea8daa0688e1f8c888e213
+Author: Andreas Oberritter <obi@saftware.de>
+Date:   Tue Aug 18 19:12:29 2009 +0200
+
+    updated configure.ac using 'autoupdate'
+
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 5e1d49a07eed3a6521990b74f7b356492dfe6893
+Author: Andreas Oberritter <obi@saftware.de>
+Date:   Fri Aug 14 21:09:54 2009 +0200
+
+    distribute genmakefileam
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 49f2a7970ee83725f4b84fa40a803326877704d4
+Author: Andreas Oberritter <obi@saftware.de>
+Date:   Fri Aug 14 21:04:32 2009 +0200
+
+    change README and build system to use Git
+
+ 4 files changed, 21 insertions(+), 7 deletions(-)
+
+commit 119417c73ffd521d3b7ca813a59c77f4f86e672b
+Author: Andreas Oberritter <obi@saftware.de>
+Date:   Fri Aug 14 18:44:35 2009 +0200
+
+    add .gitignore files
+
+ 4 files changed, 32 insertions(+)
+
+commit 6cba0c670b865cf2df60f9c461a593369574179e
+Author: Andreas Oberritter <obi@saftware.de>
+Date:   Fri Aug 14 18:17:44 2009 +0200
+
+    update ChangeLog from CVS history
+
+ 1 file changed, 75 insertions(+)
+
+commit 5dd9ba519f5825b16bcc34357cb7062d71655454
+Author: Pieter Grimmerink <pieterg@cvs.tuxbox.org>
+Date:   Mon Jan 25 16:30:10 2010 +0000
+
+    libdvbsi++: added logical channel descriptor
+
+ 1 file changed, 1 insertion(+)
+
+commit 9e5e4444cb8bfc98e30956281243865f80788df3
+Author: Pieter Grimmerink <pieterg@cvs.tuxbox.org>
+Date:   Mon Jan 25 16:16:39 2010 +0000
+
+    libdvbsi++: added logical channel descriptor
+
+ 5 files changed, 119 insertions(+)
+
+commit 7f4f0c3746c1bd365bbd28b8f9a9210f49ffb171
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Tue Jun 30 12:03:02 2009 +0000
+
+    added
+    ---------------------------------------------------------------------------
+    cp_descriptor
+    cp_identifier_descriptor
+    both are identical to the old ca_descriptor/ca_identifier_descriptor
+    
+    cpcm_delivery_signalling_descriptor
+    
+    and finally the
+    image_icon_descriptor
+    ---------------------------------------------------------------------------
+    
+    adapted the descriptor container still to return descriptors, even if those
+    are extended ones.
+    
+    ---------------------------------------------------------------------------
+
+ 13 files changed, 442 insertions(+), 2 deletions(-)
+
+commit 68b60b3956dfd4fd8885f8619cb9967020c2e44d
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Tue Jun 30 07:28:29 2009 +0000
+
+    add xait_location_descriptor
+
+ 5 files changed, 86 insertions(+), 5 deletions(-)
+
+commit 27a70fda6fd3058fcdcaeaa16200352bf99b0643
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Mon Jun 29 16:18:27 2009 +0000
+
+    add fta_content_managing_descriptor
+
+ 5 files changed, 83 insertions(+), 9 deletions(-)
+
+commit 40513316f30806a0c6eecd3718bb56170af2b166
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Thu Jun 25 17:26:07 2009 +0000
+
+    SI: sort descriptor tags, add unimplemented descriptors
+
+ 1 file changed, 44 insertions(+), 76 deletions(-)
+
+commit a9a1d494e69db0c9257248b34f70dda440e734fc
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Thu Jun 25 16:35:47 2009 +0000
+
+    add descriptor tags for extension_descriptor
+
+ 1 file changed, 9 insertions(+)
+
+commit efee53a9c142592a47df450b0e0a5ba99d9085e3
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Thu Jun 25 16:29:01 2009 +0000
+
+    update identifiers to ETSI EN 300 468 V1.9.1
+
+ 4 files changed, 20 insertions(+), 18 deletions(-)
+
+commit 224a4f7cfd0380b55c16d8a0675b6e70d734f8c9
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Feb 23 01:44:02 2009 +0000
+
+    update changelog for release of 0.3.4
+
+ 1 file changed, 77 insertions(+)
+
+commit 7dd26f03eabc5fd5da4896c53b20161c5590b781
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Feb 23 01:42:46 2009 +0000
+
+    changelog: ignore tags and branch names
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 58396d52c1b82b5f10cac5416aa74ee64a41aa88
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Feb 23 01:38:29 2009 +0000
+
+    fix compilation with g++ 4.3
+
+ 1 file changed, 2 insertions(+)
+
+commit cd536cb19719f9209da5eb9e899a3b9d565242d2
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Mon Nov 17 17:01:30 2008 +0000
+
+    remove unused destructors
+
+ 2 files changed, 2 deletions(-)
+
+commit fdf9d853b07c52e30494a224394b0b9f6701256b
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Mon Nov 17 16:33:34 2008 +0000
+
+    fix rolloff
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b5c8a1c460b8b7832e31cff4adefae7b8ee13a08
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Jun 3 15:02:23 2008 +0000
+
+    added registration descriptor
+
+ 5 files changed, 88 insertions(+), 14 deletions(-)
+
+commit 2e5617d1358362c6f40a733b09afdaf8004cc125
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Jun 3 14:49:16 2008 +0000
+
+    also generate src/Makefile.am automatically
+
+ 1 file changed, 21 insertions(+)
+
+commit c490cf36f7135b2cf3b1898be44f1459c43e403e
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Mon Mar 31 08:16:23 2008 +0000
+
+    added short smoothing buffer descriptor;
+    adjusted Makefile.am
+    activated new descriptors
+
+ 4 files changed, 86 insertions(+)
+
+commit 30a911ab89ae91170419003ecd599da396a9e6ae
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Mon Mar 31 07:52:52 2008 +0000
+
+    added the service availability descriptor - it may be used in dvb-t SDTs
+    adjusted Makefile.am accordingly
+
+ 3 files changed, 72 insertions(+)
+
+commit 68007d460d5d12d71bc6766878a7a8ebeb28f1cc
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Mon Mar 31 07:49:43 2008 +0000
+
+    fix/extend descriptor as 300468 v1.8.1 has extensions
+
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+
+commit 02b47ef46ab5d43c706ff9f8efc9393050d85179
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Mar 25 21:32:13 2008 +0000
+
+    Increased version number after release of 0.3.3
+
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit ef9a2ed0838445fea2d818ad2abce88f66a7e59c
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Mar 25 21:25:04 2008 +0000
+
+    updated changelog
+
+ 1 file changed, 211 insertions(+)
+
+commit 38200ad7c4bef83df23f78a5be85e8a5cf14ff92
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Mar 25 21:24:26 2008 +0000
+
+    ignore Makefile
+
+ 1 file changed, 1 insertion(+)
+
+commit bb5e6a8d7c35cdec0e5ad798a1c2c8b234a288cf
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Mar 25 21:18:56 2008 +0000
+
+    regenerated Makefile.am to include running_status_section.h
+
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 08d93ca75eed3921f60f30460daa15603b406b03
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Mar 25 21:18:13 2008 +0000
+
+    use printf for compatibility to dash
+
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit bb115b475b553a6f4fdc434693cfd35e7b00f889
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Mar 25 20:58:01 2008 +0000
+
+    include autogen.sh in distribution tarball
+
+ 1 file changed, 2 insertions(+)
+
+commit d4f22ddd93119866ef04e136a82891133788f951
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Mar 25 20:52:42 2008 +0000
+
+    include debian files in distribution tarballs
+
+ 3 files changed, 6 insertions(+), 2 deletions(-)
+
+commit 8b729eb168cea4961ca577876e8da132a21e21d6
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Mar 25 20:45:46 2008 +0000
+
+    debianized
+
+ 10 files changed, 163 insertions(+)
+
+commit 995095c82db4ef0dfcede4848d99af24e7ac6458
+Author: Pieter Grimmerink <pieterg@cvs.tuxbox.org>
+Date:   Fri Nov 17 11:17:57 2006 +0000
+
+    allow list management field to be modified (list management might not be known till multiple objects are put in a list together)
+
+ 2 files changed, 6 insertions(+)
+
+commit 44262a275ba26d159860536c78ab85ba214140db
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Tue Sep 26 20:54:04 2006 +0000
+
+    fix - tuxbox is pointer not reference;
+
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit b1b10b36ece32224ed36eee05b16ebd6ee3d1e0d
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Tue Sep 26 20:52:09 2006 +0000
+
+    add running status section - even if i never received one :)
+    adjusted Makefile.am
+
+ 3 files changed, 129 insertions(+)
+
+commit e20706b1a2b90b9b6cedad34cdc8d4bdf1953524
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Tue Sep 26 20:34:32 2006 +0000
+
+    add 2 missing bouquet association member functions;
+
+ 2 files changed, 13 insertions(+)
+
+commit f5cc48cde8c19d05f638d293444835d6822563a7
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Tue Sep 26 20:13:57 2006 +0000
+
+    whitespace cleanups;
+    add getBouquets member function that was missing;
+
+ 3 files changed, 9 insertions(+), 3 deletions(-)
+
+commit 6bfe3ee96d90de07ce90ad1061c485f31c718958
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Tue Sep 26 07:29:23 2006 +0000
+
+    add missing dtor
+
+ 1 file changed, 4 insertions(+)
+
+commit a2978687e3d1f0ec2167f7bfc741edcdaa59e9e2
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Mon Sep 25 20:14:26 2006 +0000
+
+    remove obsolete ca_system_descriptor;
+    was replaced by scrambling descriptor (same tag 0x65) ETSI 300468 1.6.1
+
+ 3 files changed, 56 deletions(-)
+
+commit 11aa6477d5824ed740225e7e0e0a3e4e584bbe03
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Mon Sep 25 18:58:48 2006 +0000
+
+    add missing adaptation field data descriptor;
+    adjust Makefile.am for src & include
+
+ 5 files changed, 59 insertions(+)
+
+commit be32970ff40a95e6c3d0f367b7095a1d06aaff2a
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Sat May 27 15:55:33 2006 +0000
+
+    final adjustments for being etsi 300468 1.7.1 compliant
+
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+commit 8c9615f93a512bd8809c16822d95fbb15cecf789
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Sat May 27 15:29:57 2006 +0000
+
+    adjusted servies types to match etsi 300468 1.7.1 specs
+
+ 1 file changed, 35 insertions(+), 28 deletions(-)
+
+commit 7f4127edb2658dc4c0634f5016e872ebd2a7b240
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Tue Mar 28 17:21:59 2006 +0000
+
+    add some checks to avoid segfaults on corrupted descriptor or corrupted section data
+
+ 99 files changed, 751 insertions(+), 511 deletions(-)
+
+commit ebb385263173cb50595e90cb8b417a39bde5980e
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Mar 6 04:30:51 2006 +0000
+
+    increased version number
+
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit 461c017c0dbb56ace080ed05023f89204e03870c
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Mar 6 04:29:19 2006 +0000
+
+    added changelog for release tarballs
+
+ 1 file changed, 961 insertions(+)
+
+commit 5853b4a07a9ff73d87eb3ee947a208a33149e4ca
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Mar 6 04:28:37 2006 +0000
+
+    check for cvs2cl, gnupg and md5sum before using them
+
+ 1 file changed, 6 insertions(+)
+
+commit dd9d115c76bca9ca6e1a3160487cb592c2bb5c6a
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Mar 6 04:27:23 2006 +0000
+
+    added changelog target,
+    check for cvs2cl, gnupg and md5sum before using them
+
+ 1 file changed, 9 insertions(+)
+
+commit 1df1cac7f68df6078d134b31f3d60effdea2a014
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Mar 6 04:26:25 2006 +0000
+
+    added usernames for cvs2cl
+
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 79385ad17ca5c9ac78a919e58b339c41e7292897
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Thu Feb 23 19:12:39 2006 +0000
+
+    added transport stream description section;
+    added transport stream descriptor;
+    added dsng_descriptor;
+    adapted Makefile.am's
+
+ 9 files changed, 187 insertions(+)
+
+commit 6e25cd6b788b07a5a3612f19b1e81ad5fd782e08
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Wed Feb 15 14:56:50 2006 +0000
+
+    an initial README file which menitions the download URL and the license
+
+ 1 file changed, 12 insertions(+)
+
+commit 539c8096ecb66e507f2d962591650cc8f1a849ef
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Wed Feb 15 14:56:11 2006 +0000
+
+    added new make target 'release' to be called after 'dist':
+    - creates md5 checksum files
+    - creates gpg signature files
+    - optionally copies these files and the tarballs to $LIBDVBSI_RELEASE_PATH, which can be a local or remote (ssh) path
+
+ 1 file changed, 13 insertions(+)
+
+commit 3862de3a02bfc053dac5486d3f2a05f5f9becf88
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Wed Feb 15 14:52:08 2006 +0000
+
+    added header to SOURCES variable to include it in a dist tarball,
+    fixed top_srcdir vs. top_builddir confusion,
+    remove generated .cpp file on 'make clean'
+
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit eabc234d5efab45133f8c1068db72a22bab71c7f
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Wed Feb 15 14:50:37 2006 +0000
+
+    use generated Makefile.am (fixes 'make distcheck')
+
+ 1 file changed, 122 insertions(+), 1 deletion(-)
+
+commit 65992d0457016148275bb70505aed9857cf853d2
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Wed Feb 15 14:49:39 2006 +0000
+
+    a script to generate include/dvbsi++/Makefile.am
+
+ 1 file changed, 14 insertions(+)
+
+commit ddee60fee05e39c4582ecc8664ff4b3bf0db8175
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Wed Feb 15 13:15:53 2006 +0000
+
+    updated .cvsignore files
+
+ 2 files changed, 2 insertions(+)
+
+commit 6ec015e4b4bd844925e7afc035bef026642d486e
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Feb 14 20:39:59 2006 +0000
+
+    fixed .so versioning,
+    increased package version for release 0.3.1
+
+ 2 files changed, 16 insertions(+), 4 deletions(-)
+
+commit d5442259e7c3377dbae4765b52612445211cd777
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Jan 17 21:29:35 2006 +0000
+
+    fixed detection of cxxtestgen.pl and conditional execution of QA tests
+
+ 4 files changed, 7 insertions(+), 5 deletions(-)
+
+commit 1a7f622b700bf23d51159e5b31a600349cf6167b
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Mon Dec 26 20:48:57 2005 +0000
+
+    added missing ETSI EN 300468 1.7.1 descriptors;
+    fixed a typo in ECM_Repition_Rate_Descriptor;
+    renamed getKind() method in satellite delivery descriptor;
+    changed to member names according to specs;
+    changed ac3 databytes from list to vector and use memcopy with a simpler
+    routine to calc the offsets.
+
+ 19 files changed, 603 insertions(+), 37 deletions(-)
+
+commit 5e32e397a4f99344662fe5488fe239764b1353ec
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Wed Dec 7 19:06:40 2005 +0000
+
+    after discussion with ghostrider we chose to
+    perform all vector filling via memcpy and if a vector ctor(size) is not
+    applicable within the initializer list, we use vector.resize(size)
+
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit ed656f776f39c6d52f8cfd93f11391c579907c84
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Tue Dec 6 23:51:25 2005 +0000
+
+    reserve(X) and Vector(X) is not the same !!
+
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+commit d51719edec148a96028389afb7f58db609fae31f
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Wed Nov 30 16:48:55 2005 +0000
+
+    fix some offsets
+
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 065d51734d0e0d487f533a20414383f1fc09bb88
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Wed Nov 30 16:43:25 2005 +0000
+
+    implemented mpe_fec_section
+    added table_id for mpe_fec
+
+ 4 files changed, 135 insertions(+)
+
+commit 7f1e454312e07b7dc173986a3e22e6b8f02ad747
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Mon Nov 28 21:00:27 2005 +0000
+
+    speedup if more than 2 bytes are in the private part of the descriptors
+
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+commit cc983e31e8a5e3777bcfb21a26db803c93726c20
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Mon Nov 28 16:25:09 2005 +0000
+
+    use vector
+
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 7f3e81849656ad2ec64bb81586d33983d41d882b
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Mon Nov 28 16:20:24 2005 +0000
+
+    change list to vector
+
+ 4 files changed, 12 insertions(+), 12 deletions(-)
+
+commit 7ef68a9295e7adfff8914ee1bee6f4516ce50c6b
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Thu Nov 24 17:57:47 2005 +0000
+
+    bugfix:
+    also take care of caid vector within es level
+
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit f2cf5f32a4cc050366eee740b40ba86d23825a64
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Tue Nov 22 20:43:53 2005 +0000
+
+    build fix
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 83f6a1caa241e5d21596765d5e1f53de2960c8d2
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Fri Nov 18 17:57:56 2005 +0000
+
+    add ability to filter capmt for specific caid's (needed for CI filtering)
+
+ 2 files changed, 26 insertions(+), 10 deletions(-)
+
+commit db81015c63a64694ec4631384c4bd8a3dfdb943e
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Sun Nov 13 17:56:20 2005 +0000
+
+    return pointer instead of references to keep enigma2 compatibility;
+    added function to return the prependStringBytes also;
+
+ 2 files changed, 12 insertions(+), 6 deletions(-)
+
+commit a03c7606d906745e886ad971b616c7db08076451
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Sun Nov 13 17:40:12 2005 +0000
+
+    added content identifier section
+    corrected a typo in descriptor_tag
+
+ 5 files changed, 177 insertions(+), 1 deletion(-)
+
+commit 608512e5bc0623a814e499cd066c2bc72134e63a
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Thu Nov 10 23:55:32 2005 +0000
+
+    added 7 new descriptors to libdvbsi++;
+    changed the satellite delivery system descriptor to support dvb-s2
+    (information therefore taken from dvbsnoop - thanks)
+    will be verified after final release of EN 300468 v1.7.1
+
+ 21 files changed, 752 insertions(+), 5 deletions(-)
+
+commit 971e45225a2c336d9faa906b2383f97c4ce4b0e4
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Sat Oct 29 00:10:07 2005 +0000
+
+    changed license to LGPL 2.1
+
+ 209 files changed, 1514 insertions(+), 2956 deletions(-)
+
+commit ddd229cbfed68e9cd8f5b304637b6a7a15de38c4
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Fri Sep 30 21:47:30 2005 +0000
+
+    add missing source file
+
+ 1 file changed, 1 insertion(+)
+
+commit 6feac2dbdd0455f884e74e9c8c0a95dc2f264d70
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Fri Sep 30 18:57:45 2005 +0000
+
+    virtual writeBuffer is needed,
+    small performance fix
+
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+commit 1fd478df6c6fd11b3d05d83869df1d5539ffd2c5
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Fri Sep 30 16:24:24 2005 +0000
+
+    sorry.. another one fix
+
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 6ebeaeedca17a7429bee1cb64fb8df4207a2fbc1
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Fri Sep 30 16:23:08 2005 +0000
+
+    fix
+
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 091773ea5ab025c3f19bd55ff57b6c4d2c6df13b
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Fri Sep 30 16:20:10 2005 +0000
+
+    re-add ability to inject descriptors to ca_pmt's at front and back
+
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit dce455b49564b03c48b854584bcb35aea2c4bcf8
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Fri Sep 30 16:14:42 2005 +0000
+
+    add new unknown descriptor
+
+ 2 files changed, 74 insertions(+)
+
+commit 110c7eec40dd3e1e4f78a2736098284a5a60203d
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Fri Sep 30 16:13:49 2005 +0000
+
+    fixes, speedups
+
+ 7 files changed, 150 insertions(+), 141 deletions(-)
+
+commit b6935f3d9fb881205efa994d083045479ece8e55
+Author: Andreas Monzner <ghostrider@cvs.tuxbox.org>
+Date:   Thu Sep 29 23:49:41 2005 +0000
+
+    fix capmt stuff,
+    change all std::vector to std::list.. i think its faster in this case
+
+ 107 files changed, 539 insertions(+), 502 deletions(-)
+
+commit 2f7fc24ca75056aac41e2636c0ca61c14587962c
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Sat Jan 1 15:23:38 2005 +0000
+
+    fixed a major memleak;
+    base classes need a virtual destructor;
+
+ 2 files changed, 2 insertions(+)
+
+commit 618a0d9ab5199ac665da28fc093ac4ca8a023355
+Author: Stephane Este-Gracias <sestegra@cvs.tuxbox.org>
+Date:   Fri Jun 18 22:20:40 2004 +0000
+
+    Add unit tests with CxxTest
+
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 7b7b9dc8cb9527568c4da3d08a313aa8006c516a
+Author: Stephane Este-Gracias <sestegra@cvs.tuxbox.org>
+Date:   Fri Jun 18 22:19:36 2004 +0000
+
+    Add unit tests for SI descriptors
+
+ 3 files changed, 2172 insertions(+)
+
+commit 9fb110444c16e8f02d8d9c09a8137afa357b05ca
+Author: Stephane Este-Gracias <sestegra@cvs.tuxbox.org>
+Date:   Fri Jun 18 19:23:21 2004 +0000
+
+    Fix offset bug
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 09722e984a4d00232fc5405ceebfb1010bb522c5
+Author: Stephane Este-Gracias <sestegra@cvs.tuxbox.org>
+Date:   Fri Jun 18 19:20:34 2004 +0000
+
+    Fix cells alignement
+
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+commit a2e56b2694ffee46a3ce5a056e5755593919f414
+Author: Stephane Este-Gracias <sestegra@cvs.tuxbox.org>
+Date:   Fri Jun 18 19:10:43 2004 +0000
+
+    Fix typo bug : misplaced semi-colon
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1aedf7b901ebe6db6bf397c91ce86fe9ea60f31a
+Author: Stephane Este-Gracias <sestegra@cvs.tuxbox.org>
+Date:   Fri Jun 18 19:05:19 2004 +0000
+
+    Fix offset bug
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit cc3cde6415bb5005b6c974e7701c9231768d1342
+Author: Stephane Este-Gracias <sestegra@cvs.tuxbox.org>
+Date:   Fri Jun 18 18:57:32 2004 +0000
+
+    Add destructor implementation
+
+ 1 file changed, 4 insertions(+)
+
+commit db60eb77f38e783932494d85fb092f313b7eef1d
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Thu Jun 17 09:54:20 2004 +0000
+
+    reverted commit by Marcel: use getTableIdExtension() instead
+
+ 2 files changed, 8 deletions(-)
+
+commit 7c56d3e7a0b3690cf6fec3911af3cc609a7c5359
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Thu Jun 17 00:06:00 2004 +0000
+
+    bugfix; if somebody is not filtering the PMT having the ProgramNumber set by
+    using the setTableIdExtension function of the libdvb++ sectionFilter, he
+    must have the ability to check the programNumber within the received PMT because
+    some stations use ONE pmt pid for 10 Services. Normally you should use the
+    setTableIdExtension() function.
+
+ 2 files changed, 8 insertions(+)
+
+commit 61ce5f69837dfcd66f930075b63250a12115d78f
+Author: Marcel Siegert <mws@cvs.tuxbox.org>
+Date:   Tue Jun 1 14:43:18 2004 +0000
+
+    hopyfully fixed the utf-8 things *g*
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c893dd77ad0a5bfb57896fbd43c9989eaaf1490c
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Tue Jun 1 10:46:12 2004 +0000
+
+    my editor drives me mad. maybe someone who ownes a european keyboard should replace the unicode(?) characters with ascii...
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c4e83619b398f96205e3a63485e27910e1cba996
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon May 31 21:37:03 2004 +0000
+
+    oops
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8b428b93c632a507cba07ab8107087f485dd79e6
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon May 31 21:29:05 2004 +0000
+
+    added Stéphane Esté-Graci to authors list
+
+ 1 file changed, 1 insertion(+)
+
+commit b9ac874e3a6760e102f21a59e27b614c8c70cb6b
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon May 31 21:28:35 2004 +0000
+
+    removed "no-define nostdinc", so current sid's automake doesn't complain
+
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 942fe5157afd9cb6aadac860c9d74f609e294005
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon May 31 21:21:22 2004 +0000
+
+    patch by Stéphane Esté-Graas
+    
+    Modifications:
+    - Revision date of SI specifications (1.5.1 version)
+    - Revision date of MHP specifications (1.2.1 version)
+    - Remove 0x65 SI descriptor tag (last ca_system_descriptor tag no more used in SI 1.5.1 version)
+    - Remove 0x06 and 0x07 MHP descriptor tags (last routing_descriptor_ip4 and routing_descriptor_ip6 no more used in MHP 1.2.1 version)
+    - Add 0x0E to 0x11 MHP descriptor tags (added in MHP 1.2.1 version)
+    - Remove private table identifiers and private descriptor tags because they are broadcaster dependant
+    - Extract ApplicationIdentifier class from application_informtion_section.[h|cpp] files to create application_identifier.[h|cpp] files
+    - Create a scope tag in descriptor_container.[h|cpp] files
+      SCOPE_SI for (P)SI tables (BAT, CAT, EIT, NIT, PMT, SDT, TOT)
+      SCOPE_CAROUSEL for Data and Object Carousels messages (DSI, DII, DDB)
+      SCOPE_MHP for MHP tables (AIT)
+    
+    Additions:
+    - Add implementation of MHP descriptors
+    - Add implementation of Carousel descriptors
+
+ 80 files changed, 2025 insertions(+), 579 deletions(-)
+
+commit 60db5b17b2e64915fbc9227b2b6b13bab1764e38
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Mon Feb 16 20:50:06 2004 +0000
+
+    fixed DVB_LENGTH()
+
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+commit 970bd7ebe77fdf3052770a8e57717ceca6ac68c6
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Sat Feb 14 21:57:43 2004 +0000
+
+    fix
+
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 7fc52f3790d9f67b2065f437d06f4ef60929a48f
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Fri Feb 13 17:51:06 2004 +0000
+
+    autoconf/automake/libtool tweaks
+
+ 43 files changed, 67 insertions(+), 63 deletions(-)
+
+commit 60d8c4e72b347d4ab7c7dab2f117a482282759b9
+Author: Andreas Oberritter <obi@cvs.tuxbox.org>
+Date:   Fri Feb 13 15:27:36 2004 +0000
+
+    libdvbsi++ - slightly modified former part of libdvb++ covering DVB Service Information
+
+ 157 files changed, 9326 insertions(+)

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+]>
+<refentry id="gdbus-com.halkamalka.Coremedia.ObjectManager.Sink">
+  <refmeta>    <refentrytitle role="top_of_page" id="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-Sink.top_of_page">com.halkamalka.Coremedia.ObjectManager.Sink</refentrytitle>
+  <indexterm zone="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-Sink.top_of_page"><primary sortas="Sink">com.halkamalka.Coremedia.ObjectManager.Sink</primary></indexterm>
+  </refmeta>  <refnamediv>    <refname>com.halkamalka.Coremedia.ObjectManager.Sink</refname>    <refpurpose></refpurpose>  </refnamediv>  <refsynopsisdiv role="synopsis">
+    <title role="synopsis.title">Methods</title>
+    <synopsis>
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Prepare">Prepare</link> ();
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Start">Start</link>   ();
+<link linkend="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Stop">Stop</link>    ();
+</synopsis>
+  </refsynopsisdiv>
+  <refsect1 role="properties">
+    <title role="properties.title">Properties</title>
+    <synopsis>
+<link linkend="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Sink.Status">Status</link>    readwrite  s
+<link linkend="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Sink.DataSink">DataSink</link>  readwrite  s
+</synopsis>
+  </refsect1>
+<refsect1 role="desc" id="gdbus-interface-com-halkamalka-Coremedia-ObjectManager-Sink">
+  <title role="desc.title">Description</title>
+  <para></para>
+</refsect1>
+<refsect1 role="details" id="gdbus-methods-com.halkamalka.Coremedia.ObjectManager.Sink">
+  <title role="details.title">Method Details</title>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Prepare">
+  <title>The Prepare() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Prepare"><primary sortas="Sink.Prepare">com.halkamalka.Coremedia.ObjectManager.Sink.Prepare()</primary></indexterm>
+<programlisting>
+Prepare ();
+</programlisting>
+<para></para>
+</refsect2>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Start">
+  <title>The Start() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Start"><primary sortas="Sink.Start">com.halkamalka.Coremedia.ObjectManager.Sink.Start()</primary></indexterm>
+<programlisting>
+Start ();
+</programlisting>
+<para></para>
+</refsect2>
+<refsect2 role="method" id="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Stop">
+  <title>The Stop() method</title>
+  <indexterm zone="gdbus-method-com-halkamalka-Coremedia-ObjectManager-Sink.Stop"><primary sortas="Sink.Stop">com.halkamalka.Coremedia.ObjectManager.Sink.Stop()</primary></indexterm>
+<programlisting>
+Stop ();
+</programlisting>
+<para></para>
+</refsect2>
+</refsect1>
+<refsect1 role="details" id="gdbus-properties-com.halkamalka.Coremedia.ObjectManager.Sink">
+  <title role="details.title">Property Details</title>
+<refsect2 role="property" id="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Sink.Status">
+  <title>The "Status" property</title>
+  <indexterm zone="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Sink.Status"><primary sortas="Sink:Status">com.halkamalka.Coremedia.ObjectManager.Sink:Status</primary></indexterm>
+<programlisting>
+Status  readwrite  s
+</programlisting>
+<para></para>
+</refsect2>
+<refsect2 role="property" id="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Sink.DataSink">
+  <title>The "DataSink" property</title>
+  <indexterm zone="gdbus-property-com-halkamalka-Coremedia-ObjectManager-Sink.DataSink"><primary sortas="Sink:DataSink">com.halkamalka.Coremedia.ObjectManager.Sink:DataSink</primary></indexterm>
+<programlisting>
+DataSink  readwrite  s
+</programlisting>
+<para></para>
+</refsect2>
+</refsect1>
+</refentry>
+
