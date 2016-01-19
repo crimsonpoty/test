@@ -1,0 +1,582 @@
+#!/bin/sh
+
+#############################################################################################################
+# svn repositorys path : !! Don't Move Position of Variables !!
+#############################################################################################################
+project_repo_root="svn+ssh://172.16.7.120/opt/srv"
+
+#For Test
+#project_repo_root="svn://127.0.0.1/opt/srv"
+
+app_repo=$project_repo_root"/NativeSrc/trunk/app"
+addon_repo=$project_repo_root"/NativeSrc/trunk/addon"
+benjamin_repo=$project_repo_root"/Benjamin/trunk"
+thirdparty_repo=$project_repo_root"/ThirdParty"
+kernel_repo=$project_repo_root"/Kernel"
+project_repo=$project_repo_root"/NativePrj"
+project_template_repo=$project_repo_root"/NativeSrc/trunk/NewProjectTemplate"
+cfe_repo=$project_repo_root"/native1_cfe/trunk"
+driver_repo=$benjamin_repo"/driver"
+utils_repo=$project_repo_root"/Benjamin/branch/utils"
+
+#############################################################################################################
+# Etc settings : !! Don't Move Position of Variables !!
+#############################################################################################################
+# Variables settings
+: ${DIALOG_OK=0}
+: ${DIALOG_CANCEL=1}
+: ${DIALOG_EXTRA=3}
+: ${DIALOG_ESC=255}
+
+: ${SIG_NONE=0}
+: ${SIG_HUP=1}
+: ${SIG_INT=2}
+: ${SIG_QUIT=3}
+: ${SIG_KILL=9}
+: ${SIG_TERM=15}
+
+# Temporary files settings
+tempfile=`tempfile 2>/dev/null` || tempfile=/tmp/test$$
+output=`tempfile 2>/dev/null` || output=/tmp/output$$
+
+trap "rm -f $tempfile" 0 $SIG_NONE $SIG_HUP $SIG_INT $SIG_TRAP $SIG_TERM
+
+
+#############################################################################################################
+# svn command parameter settings : !! Don't Move Position of Variables !!
+#############################################################################################################
+# Commands
+vim_insert="i"
+svn_list_commmand="svn list "
+
+# Lists for dialog
+AddonCheckList=$svn_list_commmand$addon_repo
+ConfigureRadioList=$svn_list_commmand$benjamin_repo"/configure"
+KernelRadioList=$svn_list_commmand$kernel_repo
+ProjectList=$svn_list_commmand$project_repo
+CfeList=$svn_list_commmand$cfe_repo
+DriverList=$svn_list_commmand$driver_repo
+
+# For svn property edit
+app_external="app "$app_repo
+benjamin_external="benjamin "$benjamin_repo"/benjamin"
+thirdparty_external="thirdparty "$thirdparty_repo
+
+#############################################################################################################
+# Global Variable : : !! Don't Move Position of Variables !!
+#############################################################################################################
+GotoBack=0
+
+PROJECT_NAME=""
+BENJAMIN_CONFIGURE=""
+KERNEL_VERSION=""
+SELECTED_ADDONS=""
+SELECTED_CFE=""
+SELECTED_DRIVER=""
+UTILS_USE="0"
+UTILS_USE_ONOFF="off"
+
+# for list item count
+DirectoryCount=0
+
+# Strings for Dialog
+SPACEBAR_USE="If you want to Select/UnSelect Item(s), \n Press [Space Bar] in focused item. \n and you can move focus of item by arrow keys."
+BACK_USE="If you want to move to previous dialog, \n Select [Back]."
+ESC_USE="If you want to exit this dialog, \n Press [Esc]."
+
+#############################################################################################################
+# Functions
+#############################################################################################################
+# Dialog Button and Key Process Function 
+# ${1} : return value
+RetrunValueCheck() {
+GotoBack=0
+	case ${1} in
+	  $DIALOG_OK)
+		echo "Result: `cat $tempfile`";;
+	  $DIALOG_CANCEL)
+		echo "Cancel pressed."; 
+		rm $tempfile
+		rm $output
+		exit 0;;
+	  $DIALOG_EXTRA)
+		echo "Back pressed.";GotoBack=1;;
+	  $DIALOG_ESC)
+		if test -s $tempfile ; then
+		  cat $tempfile
+		else
+		  echo "ESC pressed."
+		fi
+		rm $tempfile
+		rm $output
+		exit 0;;
+	esac
+}
+
+# Automatic Intert svn externals
+# ${1} : property string
+SvnPropertyEditExternRepo() {
+	(
+		echo $vim_insert${1}
+		printf '\0';echo ":wq";printf '\r'
+	) | svn pe svn:externals . --editor-cmd vim
+}
+
+# Directory Find Function in Multi-line File list
+# ${1} : input file had multi-line 
+# ${2} : output file
+# ${3} : init value
+FindDirectory() {
+	DirectoryCount=0
+	
+	${1} >$tempfile
+
+	# Read multi-line in tempfile, one line to text variable in one loop
+	while true
+	do
+		read text
+		if [ "$text" = "" ]; then
+			break
+		fi
+
+		# Find Folders
+		PositionOfSlash=`expr index "$text" /`
+		TextLength=`expr length "$text"`
+		if [ $PositionOfSlash = $TextLength ]; then
+			let NewTextLength=TextLength-1
+			# Eliminate '/'
+			newtext=`expr substr "$text" 1 $NewTextLength`
+			((DirectoryCount = DirectoryCount + 1))
+			
+			# Find Init Value
+			found=0
+			for init_value in ${3}
+			do
+				if [ "$newtext" = "$init_value" ]; then
+					found=1
+				fi
+			done
+			
+			# Write Folder List to output file
+			if [ "$found" = "1" ]; then
+				echo "$newtext \"\"  on" >> ${2}		
+			else
+				echo "$newtext \"\"  off" >> ${2}
+			fi
+		fi
+	done <$tempfile
+	
+	if [ $DirectoryCount = "0" ]; then
+		echo " Can't Find Item(s) !  Please Check Repository !"
+		exit 0
+	fi
+}	
+
+
+#############################################################################################################
+# Dialog Code Start (functions)
+#############################################################################################################
+#############################################################################################################
+# 1st Dialog : Project name setting
+#############################################################################################################
+first_dialog() {
+	# Initialize tempfiles
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	DIALOG_WIDTH=51
+	DIALOG_HEIGHT=20
+
+	# '2> $tempfile' In dialog command tail means redirect standard error stream(2) into a temporary file  
+
+	# Display inputbox dialog
+	dialog	--title "PROJECT NAME SETTING" \
+			--inputbox " Welcome to Project Auto Creator ! \n\n \
+	First, Please Input Project Name.\n\n $ESC_USE \n\n \
+	Must input Project Name in English :" \
+			$DIALOG_HEIGHT $DIALOG_WIDTH $PROJECT_NAME 2> $tempfile
+
+	# Store dialog retern value
+	ReturnValue=$?
+
+	# Button and Keyboard Process for dialog return
+	RetrunValueCheck $ReturnValue
+
+	# Trim blanks in Project Name
+	cat $tempfile | sed 's/ //g' | sed 's/  //g' > $output
+	PROJECT_NAME=$(cat $output)
+	
+	# Check Project Name Empty
+	if [ "$PROJECT_NAME" = "" ]; then
+		first_dialog
+	fi
+			
+	# Check Project Name Conflict
+	$ProjectList >$tempfile
+
+	while true
+	do
+		read text
+		if [ "$text" = "" ]; then
+			break
+		fi
+
+		# Find Folders
+		PositionOfSlash=`expr index "$text" /`
+		TextLength=`expr length "$text"`
+		if [ $PositionOfSlash = $TextLength ]; then
+			let ProjectNameLength=TextLength-1
+			# Eliminate '/'
+			FindProjectName=`expr substr "$text" 1 $ProjectNameLength`
+			if [ $FindProjectName = $PROJECT_NAME ]; then
+				DIALOG_WIDTH=50
+				DIALOG_HEIGHT=6
+
+				# Display Project Conflict Message box
+				dialog 	--title "WARNING!" \
+						--msgbox "This Project Name [$PROJECT_NAME] exist already ! \n Please rename !" \
+					$DIALOG_HEIGHT $DIALOG_WIDTH
+					
+				first_dialog
+			fi
+		fi
+	done <$tempfile
+
+	# Next Dialog : Benjamin project configure list
+	second_dialog
+}
+
+#############################################################################################################
+# 2nd Dialog : Benjamin project configure list
+#############################################################################################################
+second_dialog() {
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=30
+
+	FindDirectory "$ConfigureRadioList" $output "$BENJAMIN_CONFIGURE"
+	ListItemCount=$DirectoryCount
+
+	# Display radiolist dialog
+	dialog 	--title "SELECT CONFIGURE" \
+			--extra-button --extra-label "Back" \
+			--radiolist "Please Select configure for [$PROJECT_NAME] Project! \n\n $SPACEBAR_USE \n $ESC_USE \n $BACK_USE \n " \
+			$DIALOG_HEIGHT $DIALOG_WIDTH $ListItemCount --file $output 2> $tempfile
+
+	ReturnValue=$?
+	RetrunValueCheck $ReturnValue
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		first_dialog
+	fi
+
+	BENJAMIN_CONFIGURE=$(cat $tempfile)
+	# Check Configure Empty
+	if [ "$BENJAMIN_CONFIGURE" = "" ]; then
+		second_dialog
+	fi
+
+	# Next Dialog : kernel project configure list
+	third_dialog
+}
+
+#############################################################################################################
+# 3rd Dialog : kernel project configure list
+#############################################################################################################
+third_dialog() {
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=30
+
+	FindDirectory "$KernelRadioList" $output "$KERNEL_VERSION"
+	ListItemCount=$DirectoryCount
+
+	# Display radiolist dialog
+	dialog 	--title "SELECT KERNEL" \
+			--extra-button --extra-label "Back" \
+			--radiolist "Please Select kernel for [$PROJECT_NAME] Project! \n\n $SPACEBAR_USE \n $ESC_USE \n $BACK_USE \n " \
+			$DIALOG_HEIGHT $DIALOG_WIDTH $ListItemCount --file $output 2> $tempfile
+
+	ReturnValue=$?
+	RetrunValueCheck $ReturnValue
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		second_dialog
+	fi
+
+	KERNEL_VERSION=$(cat $tempfile)
+	# Check Configure Empty
+	if [ "$KERNEL_VERSION" = "" ]; then
+		cat /dev/null > $output
+		third_dialog
+	fi
+
+	# Next Dialog For addon list
+	forth_dialog
+}
+
+#############################################################################################################
+# 4th Dialog : For addon list
+#############################################################################################################
+forth_dialog() {
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=30
+
+	FindDirectory "$AddonCheckList" $output "$SELECTED_ADDONS"
+	ListItemCount=$DirectoryCount
+
+	# Display checklist dialog
+	dialog 	--title "SELECT ADDONS" \
+			--extra-button --extra-label "Back" \
+			--checklist "Please Select addons for [$PROJECT_NAME] Project! \n\n $SPACEBAR_USE \n $ESC_USE \n $BACK_USE \n " \
+			$DIALOG_HEIGHT $DIALOG_WIDTH $ListItemCount --file $output 2> $tempfile
+
+	ReturnValue=$?
+	RetrunValueCheck $ReturnValue
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		third_dialog
+	fi
+
+	SELECTED_ADDONS=$(cat $tempfile)
+
+	# Delete texts in output file
+	cat /dev/null > $output
+
+	# Next Dialog : For CFE List
+	fifth_dialog
+}
+
+#############################################################################################################
+# 5th Dialog : For CFE List
+#############################################################################################################
+fifth_dialog() {
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=30
+
+	FindDirectory "$CfeList" $output "$SELECTED_CFE"
+	ListItemCount=$DirectoryCount
+
+	# Display checklist dialog
+	dialog 	--title "SELECT CFE" \
+			--extra-button --extra-label "Back" \
+			--radiolist "Please Select CFE for [$PROJECT_NAME] Project! \n\n $SPACEBAR_USE \n $ESC_USE \n $BACK_USE \n " \
+			$DIALOG_HEIGHT $DIALOG_WIDTH $ListItemCount --file $output 2> $tempfile
+
+	ReturnValue=$?
+	RetrunValueCheck $ReturnValue
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		forth_dialog
+	fi
+
+	SELECTED_CFE=$(cat $tempfile)
+
+	# Delete texts in output file
+	cat /dev/null > $output
+
+	# Next Dialog : For driver use
+	sixth_dialog
+}
+
+#############################################################################################################
+# 6th Dialog : For driver List
+#############################################################################################################
+sixth_dialog() {
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=30
+
+	FindDirectory "$DriverList" $output "$SELECTED_DRIVER"
+	ListItemCount=$DirectoryCount
+
+	# Display checklist dialog
+	dialog 	--title "SELECT driver" \
+			--extra-button --extra-label "Back" \
+			--radiolist "Please Select driver for [$PROJECT_NAME] Project! \n\n $SPACEBAR_USE \n $ESC_USE \n $BACK_USE \n " \
+			$DIALOG_HEIGHT $DIALOG_WIDTH $ListItemCount --file $output 2> $tempfile
+
+	ReturnValue=$?
+	RetrunValueCheck $ReturnValue
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		fifth_dialog
+	fi
+
+	SELECTED_DRIVER=$(cat $tempfile)
+
+	# Delete texts in output file
+	cat /dev/null > $output
+
+	# Next Dialog : For utils use
+	seventh_dialog
+}
+
+#############################################################################################################
+# 7th Dialog : For utils use
+#############################################################################################################
+seventh_dialog() {
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=30
+	
+	if [ "$UTILS_USE" = "1" ]; then
+		UTILS_USE_ONOFF="on"
+	else
+		UTILS_USE_ONOFF="off"
+	fi
+
+	# Display checklist dialog
+	dialog 	--title "SELECT USE UTILS" \
+			--extra-button --extra-label "Back" \
+			--checklist "Please Select utils of Use/Disuse  for [$PROJECT_NAME] Project! \n\n $SPACEBAR_USE \n $ESC_USE \n $BACK_USE \n " \
+			$DIALOG_HEIGHT $DIALOG_WIDTH 1 "utils" "" $UTILS_USE_ONOFF 2> $tempfile
+
+	ReturnValue=$?
+	RetrunValueCheck $ReturnValue
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		sixth_dialog
+	fi
+
+	if [ "$(cat $tempfile)" = "utils" ]; then
+		UTILS_USE="1"
+		UTILS_USE_ONOFF="on"
+	else
+		UTILS_USE="0"
+		UTILS_USE_ONOFF="off"
+	fi
+
+	# Delete texts in output file
+	cat /dev/null > $output
+
+	# Next Dialog : Confirm decisions 
+	last_dialog
+}
+
+#############################################################################################################
+# Last Dialog : Confirm decisions 
+#############################################################################################################
+last_dialog() {
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=100
+	DIALOG_HEIGHT=20
+
+	# Display yesno dialog
+	dialog 	--title "NOTICE" \
+			--extra-button --extra-label "Back" \
+			--yesno "  Your Selections are \n \
+		- Project Name : [$PROJECT_NAME] \n \
+		- Configure : [$BENJAMIN_CONFIGURE] \n \
+		- Kernel : [$KERNEL_VERSION] \n \
+		- driver : [$SELECTED_DRIVER] \n \
+		- Addons : $SELECTED_ADDONS \n \
+		- CFE : [$SELECTED_CFE] \n \
+		- utils : [$UTILS_USE_ONOFF] \n \
+		\n \
+		Do you want to create project as this settings! \n\n $ESC_USE \n $BACK_USE \n " \
+		$DIALOG_HEIGHT $DIALOG_WIDTH
+
+	ReturnValue=$?
+	RetrunValueCheck $ReturnValue
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		sixth_dialog
+	fi
+	
+	# Start svn auto commands
+	process_svn_commands
+	auto_input_edit_svn_property_external
+	
+	# Must Exit
+	exit 0
+}
+
+#############################################################################################################
+# Auto commands Step 1 (non Dialog) : Process svn commmads
+#############################################################################################################
+process_svn_commands() {
+	# Delete for Project file Conflict Prevention 
+	rm -rf $PROJECT_NAME
+
+	mkdir $PROJECT_NAME
+	cd $PROJECT_NAME
+	svn co $project_template_repo .
+
+	# Delete unnecessary files
+	rm README_REMOVE.txt
+	rm -rf .svn
+
+	# Register Project Base files
+	cd ..
+	svn import $PROJECT_NAME $project_repo/$PROJECT_NAME -m "create $PROJECT_NAME project"
+
+	# Delete Project Base files for import
+	rm -rf $PROJECT_NAME
+
+	# Checkout Project Base files for svn property edit external repositorys
+	svn co $project_repo/$PROJECT_NAME 
+}
+
+#############################################################################################################
+# Auto commands Step 2 (non Dialog) : Edit a property by Automatic inputs
+#############################################################################################################
+auto_input_edit_svn_property_external() {
+	cd $PROJECT_NAME
+	SvnPropertyEditExternRepo "$app_external"
+	SvnPropertyEditExternRepo "$benjamin_external"
+	SvnPropertyEditExternRepo "$thirdparty_external"
+	SvnPropertyEditExternRepo "cfe $cfe_repo/$SELECTED_CFE"
+	
+	if [ "$UTILS_USE" = "1" ]; then
+		SvnPropertyEditExternRepo "utils $utils_repo"
+	fi
+
+	cd kernel
+	SvnPropertyEditExternRepo "$KERNEL_VERSION $kernel_repo/$KERNEL_VERSION"
+	
+	cd ../driver
+	SvnPropertyEditExternRepo "$SELECTED_DRIVER $driver_repo/$SELECTED_DRIVER"
+	
+	cd ../configure
+	SvnPropertyEditExternRepo "$BENJAMIN_CONFIGURE $benjamin_repo/configure/$BENJAMIN_CONFIGURE"
+
+	# Auto commands In Addon Directory
+	cd ../addon
+
+	for addon_name in $SELECTED_ADDONS
+	do
+		SvnPropertyEditExternRepo "$addon_name $addon_repo/$addon_name"
+	done	
+
+	# Commit All Results in Parent Directory of Project
+	cd ../..
+	svn ci $PROJECT_NAME -m "add new files"
+	
+	# Delete Temporary Files
+	rm -rf $PROJECT_NAME
+	rm $tempfile
+	rm $output
+}
+
+#############################################################################################################
+# Program Start Point
+#############################################################################################################
+first_dialog
+
+exit 0
