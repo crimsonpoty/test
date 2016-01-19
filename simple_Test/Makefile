@@ -4,7 +4,7 @@ TARGET_DIR = $(CURRENT_DIR)
 CPUNUM = $(shell echo `cat /proc/cpuinfo | grep cores | wc -l`)
 MORECPUNUM = 1
 BESTNUM = $(shell echo `expr "$(CPUNUM)""+""$(MORECPUNUM)"`)
-TARGET = test_time
+TARGET = test_map
 
 CC = g++
 CROSS_COMPILE = /opt/crosstools/stbgcc-4.5.3-2.4/bin/mipsel-linux-uclibc-g++
