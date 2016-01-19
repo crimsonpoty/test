@@ -1,0 +1,1 @@
+#define DEFINE_MY_VALUE 1
