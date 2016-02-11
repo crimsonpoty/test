@@ -3,7 +3,7 @@
 #define TTXOSD_DEBUG printf
 // #define TTXOSD_DEBUG(x)
 
-int main(int argc, char *argv[]) {
+int main() {
 	
 	char Name[]="Kim Sang Hyung";
 

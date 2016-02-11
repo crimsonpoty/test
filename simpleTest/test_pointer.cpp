@@ -45,7 +45,7 @@ int main()
 	memset(temp, 0x00, sizeof(temp));
 	GetDbName(temp);
 	
-	printf("DbName(%s), strlen(%d)\n", temp, strlen(temp));
+	printf("DbName(%s), strlen(%lu)\n", temp, strlen(temp));
 	
     return 0;
 }

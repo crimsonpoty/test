@@ -14,9 +14,9 @@ int main() {
     
     ETEST eTest = eTEST_1;
 
-    for(ETEST i = static_cast<ETEST>(0); i < eTEST_MAX; i++) {
+    for(int i = 0; i < static_cast<int>(eTEST_MAX); i++) {
         //eTest = static_cast<ETEST>(i);
-        eTest = i;
+        eTest = static_cast<ETEST>(i);
         printf("eTest(%d)\n", eTest); 
     } 
 

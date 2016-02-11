@@ -16,7 +16,7 @@ int main() {
 	for(int i = 0; i < 6; i++) {
 		printf("zoneid[i]=0x%02X\n", zoneid[i]);
 	}
-	printf("size = %d\n", sizeof(zoneid));
+	printf("size = %lu\n", sizeof(zoneid));
 
 	return 0;
 }

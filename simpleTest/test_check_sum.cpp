@@ -9,7 +9,7 @@
 
 #define NOR 1 * 1024 * 1024
 
-int main(int argc, char ** argv)
+int main(int argc, char *argv[])
 {
 // mmap
 /*

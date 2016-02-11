@@ -68,7 +68,7 @@ int CalculateFontWidth(const uchar *pSrc, const int pWidth, const int pHeight, c
 }
 
 
-int main(int argc, char *argv[]) {
+int main() {
 	int Width = 16;
 	int Height = 24;	
 	uint Length = Width * Height;

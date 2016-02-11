@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <string.h>
 
 // #define TTXOSD_DEBUG
 // #define printf(x, ...)
@@ -30,7 +31,7 @@ int main() {
 
     printf("cTitle(%s), strTitle(%s)\n", cTitle, strTitle.c_str());
 
-    cTitle = strTitle.c_str();
+    strcpy(cTitle, strTitle.c_str());
     
     printf("cTitle(%s), strTitle(%s)\n", cTitle, strTitle.c_str());
     
