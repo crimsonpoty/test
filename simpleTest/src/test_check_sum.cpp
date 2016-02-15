@@ -35,6 +35,11 @@ int main(int argc, char *argv[])
 	printf("size %04X\n", check_sum);
 */ 
 
+	if(argc != 2) {
+		printf("usage: %s \"input_file_name\"\n", argv[0]);
+		return 0;
+	}
+
 // file
 	int fd;
 	struct stat st;

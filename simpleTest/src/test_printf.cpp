@@ -33,7 +33,7 @@ int main() {
     char chip_id[12] = "00694967295";
     unsigned long int Num = atoi(chip_id);
     
-    printf("%s, %0lu, %X\n", chip_id, Num, Num);
+    printf("%s, %0lu, %X\n", chip_id, Num, (int)Num);
 
 	return 0;
 }
