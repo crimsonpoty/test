@@ -1,28 +1,29 @@
-CURRENT_DIR = $(shell echo pwd)
-SRC_DIR = $(CURRENT_DIR)
-TARGET_DIR = $(CURRENT_DIR)
+CURRENT_DIR = $(shell pwd)
+
+SRC_DIR = $(CURRENT_DIR)/src
+OBJ_DIR = $(CURRENT_DIR)/obj
+BIN_DIR = $(CURRENT_DIR)/bin
+
 CPU_NUM = $(shell echo `cat /proc/cpuinfo | grep cores | wc -l`)
-MORECPUNUM = 1
-BESTNUM = $(shell echo `expr "$(CPU_NUM)""+""$(MORECPUNUM)"`)
-TARGET = $(subst .cpp, , $(shell ls *.cpp))
+MORE_CPU_NUM = 1
+BEST_NUM = $(shell expr $(CPU_NUM) + $(MORE_CPU_NUM))
 
-CC = g++
+BUILD_COMPILER = g++
 CROSS_COMPILE = /opt/crosstools/stbgcc-4.5.3-2.4/bin/mipsel-linux-uclibc-g++
-#CC = $(CROSS_COMPILE)
+#BUILD_COMPILER = $(CROSS_COMPILE)
 
-.PHONY: all clean $(TARGET) test
+.PHONY: all clean
 
-all: $(TARGET)
-
-$(TARGET): %: %.cpp
-	@echo "[Complie $(notdir $@)]"
-	@$(CC) -Wall -W -g -o $@ $<
+all: check_dir
+	@export CC=$(BUILD_COMPILER);make -j$(BEST_NUM) -C $(SRC_DIR)
 
 clean:
-	-@rm $(TARGET)
+	-@rm -rf $(OBJ_DIR)
+	-@rm -rf $(BIN_DIR)
 
-test: 
-	@echo "[CPU_NUM is $(CPU_NUM)]"
-	@echo "[MORECPUNUM is $(MORECPUNUM)]"
-	@echo "[BESTNUM is $(BESTNUM)]"
+check_dir: 
+	@test -d $(OBJ_DIR) || mkdir -p $(OBJ_DIR)
+	@test -d $(BIN_DIR) || mkdir -p $(BIN_DIR)
 	
+test:
+	@echo $(BEST_NUM)
