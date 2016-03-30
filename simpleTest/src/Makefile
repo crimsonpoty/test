@@ -7,7 +7,9 @@ TARGET = $(sort $(subst .cpp, , $(shell ls *.cpp)))
 
 ### Flag 선언
 CXXFLAGS = -Wall -W -g
-CXXFLAGS = -I$(BUILD_ROOT)/include
+CXXFLAGS += -I$(BUILD_ROOT)/include
+CXXFLAGS += -std=c++11
+CXXFLAGS += $(filter-out -Wunused-parameter, $(CXXFLASG))
 
 .PHONY: all
 
