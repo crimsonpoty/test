@@ -3,6 +3,7 @@
 #include <string.h>
 #include <vector>
 #include <algorithm>
+// #include "DlnbUbList.h"
 
 typedef std::vector<uint8_t> PayloadData;
 
@@ -37,7 +38,7 @@ uint8_t Crc8(const PayloadData &data, int Len)
 {
 	auto it = data.begin(); it++;
 	uint16_t crc = 0;
-	
+
 	for (int j = Len - 1; j; j--, it++) {
 		crc ^= (*it << 8);
 		for(int i = 8; i; i--) {
@@ -52,22 +53,23 @@ uint8_t Crc8(const PayloadData &data, int Len)
 int main(int argc, char *argv[])
 {
 	if(argc > 3) {
-		printf("Too many argument\n");		
-		printf("e.g.,) %s 1  # print Ub List\n", argv[0]);		
+		printf("Too many argument\n");
+		printf("e.g.,) %s 1  # print Ub List\n", argv[0]);
 		return -1;
 	}
-	
+
+#if 1
 	const int UbListSize = sizeof(UbList)/sizeof(SUbList);
-	
+
 	if(argc == 2 && !strcmp(argv[1], "1")) {
 		for(int i = 0; i < UbListSize; i++)	{
-			printf("%2d: UbNo(%2d), InputFrequency(%4d), Polarization(%d), OutputLevel(%d), UbFrequency(%4d), Bandwidth(%d)\n", 
-				i, UbList[i].UbNo, UbList[i].InputFrequency, UbList[i].Polarization, UbList[i].OutputLevel, UbList[i].UbFrequency, UbList[i].Bandwidth);		
+			printf("%2d: UbNo(%2d), InputFrequency(%4d), Polarization(%d), OutputLevel(%d), UbFrequency(%4d), Bandwidth(%d)\n",
+				i, UbList[i].UbNo, UbList[i].InputFrequency, UbList[i].Polarization, UbList[i].OutputLevel, UbList[i].UbFrequency, UbList[i].Bandwidth);
 		}
 	}
 	printf("\n");
-	
-	PayloadData UbData;	
+
+	PayloadData UbData;
 	UbData.push_back(3);	// Version
 
 	for(int i = 0; i < UbListSize; i++)	{
@@ -78,15 +80,35 @@ int main(int argc, char *argv[])
 		UbData.push_back((UbList[i].UbFrequency - 300) & 0xFF);
 		UbData.push_back(UbList[i].Bandwidth & 0x7F);
 	}
-	
+
 	uint8_t crc = Crc8(UbData, UbData.size());
 	UbData.push_back(crc);	// CRC-8
-	
+
 	int i = 0;
 	for(auto it = UbData.begin(); it != UbData.end(); it++, i++) {
 		printf("%02X", *it);
 	};
 	printf("\n");
+#else
+	CDlnbUbList DlnbUbList;
+	DlnbUbList.SetVersion(3);
+
+	if(argc == 2 && !strcmp(argv[1], "1")) {
+		for(int i = 0; i < DlnbUbList.GetUbListSize(); i++)	{
+			printf("%2d: UbNo(%2d), TxFrequency(%4d), Polarization(%d), UbFrequency(%4d), Bandwidth(%d), OutputLevel(%d)\n",
+				i, DlnbUbList.GetUbNo(i), DlnbUbList.GetTxFrequency(i), DlnbUbList.GetPolarization(i), DlnbUbList.GetUbFrequency(i), DlnbUbList.GetBandwidth(i), DlnbUbList.GetOutputLevel(i));
+		}
+	}
+	printf("\n");
+	
+	PayloadData oPayloadData = DlnbUbList.GetPayloadData();
+	
+	int i = 0;
+	for(auto it = oPayloadData.begin(); it != oPayloadData.end(); it++, i++) {
+		printf("%02X", *it);
+	};
+	printf("\n");
+#endif
 
 	return 0;
 }
