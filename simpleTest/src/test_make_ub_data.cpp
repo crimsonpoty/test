@@ -89,6 +89,16 @@ int main(int argc, char *argv[])
 		printf("%02X", *it);
 	};
 	printf("\n");
+	printf("===================================\n");
+	for(auto it = ++UbData.begin(); it != --UbData.end(); it+=6) {
+		printf("UbNo(%2d), ", *it >> 3);
+		printf("InputFrequency(%4d), ", (((*(it) & 0x7) << 8) | *(it+1)) + 300);
+		printf("Polarization(%d), ", *(it+2));
+		printf("OutputLevel(%2d), ", *(it+3) >> 3);
+		printf("UbFrequency(%4d), ", (((*(it+3) & 0x7) << 8) | *(it+4)) + 300);
+		printf("Bandwidth(%2d) ", *(it+5));
+		printf("\n");
+	}
 #else
 	CDlnbUbList DlnbUbList;
 	DlnbUbList.SetVersion(3);
@@ -100,9 +110,9 @@ int main(int argc, char *argv[])
 		}
 	}
 	printf("\n");
-	
+
 	PayloadData oPayloadData = DlnbUbList.GetPayloadData();
-	
+
 	int i = 0;
 	for(auto it = oPayloadData.begin(); it != oPayloadData.end(); it++, i++) {
 		printf("%02X", *it);
