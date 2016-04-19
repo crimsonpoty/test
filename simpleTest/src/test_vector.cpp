@@ -72,6 +72,12 @@ int main(int argc, char** argv) {
 		std::cout << (it+1)->a << std::endl;
 	}
 
+	std::cout << std::endl << std::endl << "=============== access test =============" << std::endl << std::endl;
+	
+	for(int i = 0; i < 20; i++) {
+		std::cout << iterTest[i].a << std::endl;
+	}
+	
 	std::cout << std::endl << std::endl << "=========================================" << std::endl << std::endl;
 
 	if(argc != 2) {
@@ -91,5 +97,44 @@ int main(int argc, char** argv) {
 		std::cout << it->a << std::endl;
 	}
 
+	std::cout << std::endl << std::endl << "=============== = Back Up ===============" << std::endl << std::endl;
+	
+	std::vector<test> Backup;
+	
+	Backup.clear();
+	Backup = Temp;
+	
+	for(auto it = Backup.begin(); it != Backup.end(); it++) {
+		std::cout << it->a << " " << it->b << " " << it->c << " " << std::endl;
+	}
+	
+	std::vector<test> Copy;
+	std::copy(Temp.begin(), Temp.end(), std::back_inserter(Copy));
+
+	std::cout << std::endl << std::endl << "================ copy backup ============" << std::endl << std::endl;
+	
+	for(auto it = Copy.begin(); it != Copy.end(); it++) {
+		std::cout << it->a << " " << it->b << " " << it->c << " " << std::endl;
+	}
+
+	std::cout << std::endl << std::endl << "=============== = Back Up (changed) =====" << std::endl << std::endl;
+	
+	Temp[3].a = 0;
+
+	for(auto it = Backup.begin(); it != Backup.end(); it++) {
+		std::cout << it->a << " " << it->b << " " << it->c << " " << std::endl;
+	}
+	
+	std::cout << std::endl << std::endl << "================ copy backup (changed) ==" << std::endl << std::endl;
+	
+	for(auto it = Copy.begin(); it != Copy.end(); it++) {
+		std::cout << it->a << " " << it->b << " " << it->c << " " << std::endl;
+	}
+
+	std::cout << std::endl << std::endl << "================ original Temp ==========" << std::endl << std::endl;
+	
+	for(auto it = Temp.begin(); it != Temp.end(); it++) {
+		std::cout << it->a << " " << it->b << " " << it->c << " " << std::endl;
+	}
 	return 0;
 }
