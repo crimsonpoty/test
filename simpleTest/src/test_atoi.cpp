@@ -1,17 +1,18 @@
 /* itoa example */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 
 int main ()
 {
-	char test[4] = "123";
-	printf("char : %s\n", test);
+	// char test[4] = "123";
+	std::string test = "0123";
+	printf("char : %s\n", test.c_str());
 	
-	int changedTest = atoi(test);
-	printf("int : %d\n", changedTest);
+	printf("int : %d\n", atoi(test.c_str()));
 	
-	int compareInt = 123;
-	if(compareInt == changedTest) {
+	unsigned int compareInt = 123;
+	if(compareInt == static_cast<unsigned int>(atoi(test.c_str()))) {
 		printf("Ture\n");
 	}
 	else {
