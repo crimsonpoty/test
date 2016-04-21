@@ -72,6 +72,12 @@ int main(int argc, char** argv) {
 		std::cout << (it+1)->a << std::endl;
 	}
 
+	std::cout << std::endl << std::endl << "=============== capa test =============" << std::endl << std::endl;
+	
+	std::cout << "size = " << Temp.size() << ", capacity = " <<  Temp.capacity() << ", max_size = " <<  Temp.max_size() << std::endl;
+	// Temp.clear();
+	std::cout << "clear ! | size = " << Temp.size() << ", capacity = " <<  Temp.capacity() << ", max_size = " <<  Temp.max_size() << std::endl;
+	
 	std::cout << std::endl << std::endl << "=============== access test =============" << std::endl << std::endl;
 	
 	for(int i = 0; i < 20; i++) {
