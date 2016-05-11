@@ -2,7 +2,7 @@
 #include <time.h>
 
 int main() {
-	time_t now = (time_t)1449400546;
+	time_t now = (time_t)1449014002;
 	struct tm t;
 
 	// UTC를 국가 시간으로 변환
