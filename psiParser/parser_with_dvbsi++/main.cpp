@@ -20,9 +20,6 @@ using namespace std;
 
 static void GetSectionData(int PID, int TID, u_char* tsbuffer, int length);
 
-static uint32_t issueId[] = {
-	2155393433, 2153962154, 2157073514, 2153953502, 2156966052, 2153961525, 2156079615, 2156090059, 2156089755, 1861464413, 1860201202, 2156100606, 2155400188, 1861486662, 1861473005
-};
 
 int main(int argc, char *argv[])
 {
@@ -92,29 +89,8 @@ void OnSectionData(int pid, int tid, u_char* section, size_t length)
 			const IntrawayMessageList* iwmList = iwm.getIntrawayMessages();
 
 			for(IntrawayMessageConstIterator it = iwmList->begin(); it != iwmList->end(); ++it) {
-				// printf("sectionLength(%d), addressType(%d), addressLength(%d), stbId(%X), msgId(%X), msgVersion(%d), isCompressed(%d), msgDescLength(%d)\n",  iwm.getSectionLength(), (*it)->getAddressType(), (*it)->getAddressLength(), (*it)->getStbId(), (*it)->getMsgId(), (*it)->getMsgVersion(), (*it)->getIsCompressed(), (*it)->getMsgDescLength());
-				// const uint8_t *pText = (*it)->getText();
-				// printf("{");
-				// for(int i = 0; i < iwm.getSectionLength(); i++) {
-					// printf("0x%02X, ", section[i]);
-				// }
-				// printf("}, \n");
-				// if(iwm.getSectionLength() > 1000) {
-					// printf("%d\n", iwm.getSectionLength());
-				// }
-				bool isMatch = false;
-				for(int i = 0; i < (int)(sizeof(issueId) / sizeof(uint32_t)); i++) {
-					if(issueId[i] == (*it)->getStbId()) {
-						isMatch = true;
-						break;
-					}
-				}
-				if(isMatch) {
-					printf("AddressType: %d, StbId: %d\n", (*it)->getAddressType(), (*it)->getStbId());
-					for(int i = 0; i < (int)length; i++) {
-						printf("%02X", section[i]);
-					}
-					printf("\n\n");
+				if(0x809415D0 == (*it)->getStbId()) {
+					// printf("AddressType: %u, StbId: %u, MsgId: %u\n", (*it)->getAddressType(), (*it)->getStbId(), (*it)->getMsgId());
 				}
 			}
 			once = false;

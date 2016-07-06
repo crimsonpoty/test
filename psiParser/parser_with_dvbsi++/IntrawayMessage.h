@@ -9,6 +9,7 @@
 #define _INTRAWAY_MESSAGE_SECTION_H_
 
 #include "Common.h"
+#include <vector>
 #include <dvbsi++/long_crc_section.h>
 #include <dvbsi++/descriptor.h>
 

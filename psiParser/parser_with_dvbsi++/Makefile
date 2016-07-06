@@ -8,8 +8,8 @@ SRCS +=	\
 CXXFLAGS += -Wall -W -g
 CXXFLAGS += -Ilibdvbsi++/include
 LDFLAGS += -ldvbsi++ -Lobj
-#LDFLAGS += -ldvbsi++ -Llibdvbsi++/src/.libs
-
+CXXFLAGS += -Ilzma/C
+LDFLAGS += -l7zlzma
 
 MAKE = make
 CXX = g++
