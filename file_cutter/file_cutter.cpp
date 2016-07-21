@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <iostream>
 #include <fstream>
 
 using namespace std;
@@ -24,20 +23,20 @@ void printUsage(char *fc);
 int main(int argc, char *argv[])
 {
 
-	string inputFileName, outputFileName;
+	string InputFileName, OutputFileName;
 	ECUT_MODE eCUT_MODE = eECUT_MODE_AUTO;
-	unsigned int cutSize = 0;
-	unsigned int cutPoint = 0;
+	unsigned int CutSize = 0;
+	unsigned int CutPoint = 0;
 
 	int opt = 0;
 	while(-1 != (opt = getopt(argc, argv, "hi:o:m:b:p:"))) {
 		switch(opt) {
 			case 'i':
-				inputFileName = optarg;
+				InputFileName = optarg;
 				break;
 
 			case 'o':
-				outputFileName = optarg;
+				OutputFileName = optarg;
 				break;
 
 			case 'm':
@@ -45,16 +44,16 @@ int main(int argc, char *argv[])
 				break;
 
 			case 'b':
-				cutSize = atoi(optarg);
+				CutSize = atoi(optarg);
 				break;
 
 			case 'p':
-				cutPoint = atoi(optarg);
+				CutPoint = atoi(optarg);
 				break;
 
 			case '?':
 				if('f' == optopt) {
-					cout << "input file name" << endl;
+					puts("input file name");
 				}
 				break;
 
@@ -62,34 +61,88 @@ int main(int argc, char *argv[])
 				printUsage(argv[0]);
 				return -1;
 		}
-	}	
+	}
 
-	///> 입력 파라미터에 대한 예외 처리
-	if(!(inputFileName.size() && outputFileName.size())) {
+	// 입력 파라미터에 대한 예외 처리
+	// 파일 크기는 꼭 입력 받아야 함(파일 크기에서 MB나 GB같은 처리 해줘야 함)
+	if(!(InputFileName.size() && OutputFileName.size())) {
 		printUsage(argv[0]);
 	}
 	// else if()
-	else {
-		cout << "inputFileName : " << inputFileName << endl;
-		cout <<	"outputFileName : " << outputFileName << endl;
-		cout <<	"eCUT_MODE : " << eCUT_MODE << endl;
-		cout <<	"cutSize : " << cutSize << endl;
-		cout <<	"cutPoint : " << cutPoint << endl;
+	else {	// 파일 종료 후, 나오는 걸로...
+		printf("InputFileName: %s\n", InputFileName.c_str());
+		printf("OutputFileName: %s\n", OutputFileName.c_str());
+		printf("eCUT_MODE: %d\n", eCUT_MODE);
+		printf("CutSize: %d\n", CutSize);
+		printf("CutPoint: %d\n", CutPoint);
 	}
-	
-	// TODO : ifstream을 사용하지 말고, fopen으로 파일을 핸들링하고 fwrite시, append모드로 한다거나 하는 작업으로 진행하면 될듯...
 
-	ifstream ifs;
-	ifs.open(inputFileName, fstream::in | fstream::binary);
-	
-	if(ifs.is_open()) {
-		ofstream ofs(outputFileName, fstream::binary);
-		
-		ofs << ifs.rdbuf();
-		ofs.close();
+
+	FILE *fp = fopen(InputFileName.c_str(), "rb");
+	FILE *ofp = fopen(OutputFileName.c_str(), "wb");
+	if(!(fp && ofp)) {
+		puts("File not found");
+		return -1;
 	}
-	
-	ifs.close();
+
+	// 읽어온 변수에 따라 fp 위치(fseek) 처리
+
+	int CutMode = 0;	// eCUT_MODE 처리
+	CutPoint = 0;
+	fseek(fp, 0L, SEEK_END);	// 파일 사이즈
+	unsigned int FileLength = ftell(fp);
+	printf("FileLength: %uB, %dKB, %dMB\n", FileLength, FileLength/1024, FileLength/(1024*1024));
+	fseek(fp, CutPoint, CutMode);
+
+
+	// TODO : CutSize 처리 (아마 입력 시 예외처리??)
+	CutSize = FileLength;
+	char *Buffer = NULL;
+
+	// progress 표시하는거 어떻게 하는겨?
+
+	if(CutSize && CutSize <= FileLength) {
+		if(CutSize < 1024*1024) {
+			Buffer = new char[CutSize];
+			fread(Buffer, CutSize, 1, fp);
+			fwrite(Buffer, CutSize, 1, ofp);
+		}
+		else {
+			fclose(ofp);
+			ofp = fopen(OutputFileName.c_str(), "ab");
+			if(!ofp) {
+				puts("Fail to write in file1");
+				return -1;
+			}
+
+			Buffer = new char[1024*1024];
+			unsigned int RemainSize = CutSize;
+			int nR, nW = 0;
+
+			while(RemainSize) {
+				if(RemainSize > 1024*1024) {
+					nR = fread(Buffer, 1024*1024, 1, fp);
+					nW = fwrite(Buffer, 1024*1024, 1, ofp);
+					RemainSize -= 1024*1024;
+				}
+				else {
+					nR = fread(Buffer, RemainSize, 1, fp);
+					nW = fwrite(Buffer, RemainSize, 1, ofp);
+					RemainSize = 0;
+				}
+
+				if(nR != nW || nR <= 0 || nW <= 0) {
+					puts("Fail to write in file3");
+					return -1;
+				}
+			}
+		}
+	}
+
+	delete Buffer;
+	fclose(fp);
+	fclose(ofp);
+
 
 	return 0;
 }
@@ -98,10 +151,10 @@ int main(int argc, char *argv[])
 
 void printUsage(char *fc)
 {
-	cout << "[Usage] " << fc << ": " << endl;
-	cout << "\t-i : " << "input file name" << endl;
-	cout << "\t-o : " << "output file name" << endl;
-	cout << "\t-m : " << "file cut mode" << "\te.g.,) 0: begin, 1: middle, 2:end" << endl;
-	cout << "\t-b : " << "file size for cut" << endl;
-	cout << "\t-p : " << "if MIDDLE in file cut mode, input starting point for cut" << endl;
+	printf("[Usage] %s:\n", fc);
+	puts("\t-i : input file name");
+	puts("\t-o : output file name");
+	puts("\t-m : file cut mode\te.g.,) 0: begin, 1: middle, 2:end");
+	puts("\t-b : file size for cut");
+	puts("\t-p : if MIDDLE in file cut mode, input starting point for cut");
 }
