@@ -89,13 +89,12 @@ int main(int argc, char** argv) {
 
 	std::cout << std::endl << std::endl << "================ erase test =============" << std::endl << std::endl;
 	std::vector<int> EraseTest;
-	for(int i = 0; i < 10; i ++) {
+	for(int i = 0; i < 9; i ++) {
 		EraseTest.push_back(i);
 	}
 
 	for(auto it = EraseTest.begin(); it != EraseTest.end();) {
 		if((*it) % 2 == 0) {
-			std::cout << (*it) << " ";
 			it++;
 		}
 		else {
@@ -103,6 +102,16 @@ int main(int argc, char** argv) {
 		}
 	}
 
+	auto itT = EraseTest.begin();
+	for(; itT != EraseTest.end(); itT++) {
+		std::cout << (*itT) << " ";
+	}
+	std::cout << "EraseTest.end: " << (*itT) << (*(--itT)) << std::endl;
+
+	std::cout << std::endl << std::endl << "=========================================" << std::endl << std::endl;
+	std::cout << std::endl << std::endl << "=============== find test ===============" << std::endl << std::endl;
+	auto itEraseTest = EraseTest.end();
+	std::cout << "EraseTest.end: " << (*itEraseTest) << std::endl;
 	std::cout << std::endl << std::endl << "=========================================" << std::endl << std::endl;
 
 

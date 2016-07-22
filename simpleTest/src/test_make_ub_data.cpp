@@ -19,18 +19,62 @@ struct SUbList
 
 SUbList UbList[] =
 {
-	{0,		978,	2,	25,	978,	36},
-	{1,		1018,	2,	25,	1018,	36},
-	{2,		1058,	2,	25,	1058,	36},
-	{3,		1098,	2,	25,	1098,	36},
-	{4,		1138,	2,	25,	1138,	36},
-	{5,		1178,	2,	25,	1178,	36},
-	{6,		1472,	2,	25,	1472,	36},
-	{7,		1512,	2,	25,	1512,	36},
-	{8,		1552,	2,	25,	1552,	36},
-	{9,		1592,	2,	25,	1592,	36},
-	{10,	1632,	2,	25,	1632,	36},
-	{11,	1672,	2,	25,	1672,	36}
+#if 0	// TelefonicaIsdbT
+		{0,		10975,	1,	25,	975,	36},
+		{1,		11015,	1,	25,	1015,	36},
+		{2,		11055,	1,	25,	1055,	36},
+		{3,		11095,	1,	25,	1095,	36},
+		{4,		11135,	1,	25,	1135,	36},
+		{5,		11175,	1,	25,	1175,	36},
+		{6,		12470,	1,	25,	1215,	36},
+		{7,		12510,	1,	25,	1255,	36},
+		{8,		12550,	1,	25,	1305,	36},
+		{9,		12590,	1,	25,	1345,	36},
+		{10,	11055,	0,	25,	1385,	36},
+		{11,	11095,	0,	25,	1425,	36},
+		{12,	11135,	0,	25,	1465,	36},
+		{13,	11185,	0,	25,	1515,	36},
+		{14,	11222,	0,	25,	1552,	36},
+		{15,	11262,	0,	25,	1592,	36},
+		{16,	12630,	1,	25,	1632,	36},
+		{17,	11342,	0,	25,	1672,	36},
+		{18,	12670,	1,	25,	1712,	36},
+		{19,	11422,	0,	25,	1752,	36},
+		{20,	11808,	1,	25,	1886,	36},
+		{21,	11851,	1,	25,	1929,	36},
+		{22,	11891,	1,	25,	1969,	36},
+		{23,	11931,	1,	25,	2009,	36},
+		{24,	11972,	1,	25,	2050,	36},
+		{25,	12012,	1,	25,	2090,	36},
+		{26,	12052,	1,	25,	2130,	36},
+		{27,	12092,	1,	25,	2170,	36}
+#else
+		{0,		10728,	1,	25,	978,	36},
+		{1,		10768,	1,	25,	1018,	36},
+		{2,		10808,	1,	25,	1058,	36},
+		{3,		10848,	1,	25,	1098,	36},
+		{4,		10888,	1,	25,	1138,	36},
+		{5,		10928,	1,	25,	1178,	36},
+		{6,		10808,	0,	25,	1218,	36},
+		{7,		10848,	0,	25,	1258,	36},
+		{8,		10928,	0,	25,	1298,	36},
+		{9,		12092,	1,	25,	1338,	36},
+		{10,	12390,	1,	25,	1378,	36},
+		{11,	11175,	1,	25,	1425,	36},
+		{12,	11222,	1,	25,	1472,	36},
+		{13,	11262,	1,	25,	1512,	36},
+		{14,	11302,	1,	25,	1552,	36},
+		{15,	11342,	1,	25,	1592,	36},
+		{16,	11382,	1,	25,	1632,	36},
+		{17,	11422,	1,	25,	1672,	36},
+		{18,	10728,	0,	25,	1768,	36},
+		{19,	10768,	0,	25,	1808,	36},
+		{20,	11738,	0,	25,	1866,	56},
+		{21,	11799,	0,	25,	1930,	56},
+		{22,	11972,	0,	25,	1984,	36},
+		{23,	12092,	0,	25,	2024,	36},
+		{24,	12172,	0,	25,	2064,	36}
+#endif
 };
 
 /** Return CRC-8 of the data, using x^8 + x^2 + x + 1 polynomial. */
@@ -54,7 +98,7 @@ int main(int argc, char *argv[])
 {
 	if(argc > 3) {
 		printf("Too many argument\n");
-		printf("e.g.,) %s 1  # print Ub List\n", argv[0]);
+		printf("[Usage] %s 1  # print Ub List\n", argv[0]);
 		return -1;
 	}
 
@@ -73,9 +117,19 @@ int main(int argc, char *argv[])
 	UbData.push_back(3);	// Version
 
 	for(int i = 0; i < UbListSize; i++)	{
-		UbData.push_back((UbList[i].UbNo << 3) + (((UbList[i].InputFrequency - 300) >> 8) & 0x7));
-		UbData.push_back((UbList[i].InputFrequency - 300) & 0xFF);
-		UbData.push_back(UbList[i].Polarization);
+		const uint16_t tempInputFrequency = UbList[i].InputFrequency > 11700 ? UbList[i].InputFrequency - 10600 : UbList[i].InputFrequency - 9750;
+		UbData.push_back((UbList[i].UbNo << 3) + (((tempInputFrequency - 300) >> 8) & 0x7));
+		UbData.push_back((tempInputFrequency - 300) & 0xFF);
+		uint8_t DlnbPolarization = 0;
+		if(UbList[i].InputFrequency > 11700) {
+			if(UbList[i].Polarization == 0)	DlnbPolarization = 0;
+			else							DlnbPolarization = 1;
+		}
+		else {
+			if(UbList[i].Polarization == 0)	DlnbPolarization = 3;
+			else							DlnbPolarization = 2;
+		}
+		UbData.push_back(DlnbPolarization);
 		UbData.push_back((UbList[i].OutputLevel << 3) + (((UbList[i].UbFrequency - 300) >> 8) & 0x7));
 		UbData.push_back((UbList[i].UbFrequency - 300) & 0xFF);
 		UbData.push_back(UbList[i].Bandwidth & 0x7F);
@@ -86,12 +140,18 @@ int main(int argc, char *argv[])
 
 	int i = 0;
 	for(auto it = UbData.begin(); it != UbData.end(); it++, i++) {
-		printf("%02X", *it);
+		// printf("%02X", (*it));
+		printf("0x%02X, ", (*it));
+		if(i && i % 10 == 0) puts("");
 	};
+
+	printf("\n");
+	printf("crc: %02X", crc);
 	printf("\n");
 	printf("===================================\n");
 	for(auto it = ++UbData.begin(); it != --UbData.end(); it+=6) {
-		printf("UbNo(%2d), ", *it >> 3);
+	// for(auto it = UbData.begin(); it != --UbData.end(); it+=6) {
+		printf("UbNo(%2d), ", (*it) >> 3);
 		printf("InputFrequency(%4d), ", (((*(it) & 0x7) << 8) | *(it+1)) + 300);
 		printf("Polarization(%d), ", *(it+2));
 		printf("OutputLevel(%2d), ", *(it+3) >> 3);
