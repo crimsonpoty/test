@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ enum ECUT_MODE
 void printUsage(char *fc);
 void getCutModeString(string &strMode, ECUT_MODE eMode);
 void getSizeByUnit(string &strSize, uint32_t Size);
-
+void printProgress(float Percent);
 
 int main(int argc, char *argv[])
 {
@@ -244,4 +245,23 @@ void getSizeByUnit(string &strSize, uint32_t Size)
 			strSize.append("B");
 			break;
 	}
+}
+
+void printProgress(float Percent)
+{
+	if(Percent > 1.0) {
+		Percent = 1.0;
+	}
+	
+	const int BarWidth = 70;
+
+	cout << '[';
+	int pos = BarWidth * Percent;
+	for (int i = 0; i < BarWidth; ++i) {
+		if (i < pos) cout << '=';
+		else if (i == pos) cout << '>';
+		else cout << ' ';
+	}
+	cout << "] " << int(Percent * 100.0) << " %\r";
+	cout.flush();
 }
