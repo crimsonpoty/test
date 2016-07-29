@@ -1,11 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <unistd.h>
-#include <fstream>
+#include <assert.h>
+#include <string>
 
 using namespace std;
 
+//#define BUFFER_SIZE		(1024 * 1024)
+#define BUFFER_SIZE		(1024)
 
+
+// 이거 삭제하자
 enum ECUT_MODE
 {
 	eECUT_MODE_BEGIN,
@@ -16,21 +22,21 @@ enum ECUT_MODE
 
 
 void printUsage(char *fc);
-
-
+void getCutModeString(string &strMode, ECUT_MODE eMode);
+void getSizeByUnit(string &strSize, uint32_t Size);
 
 
 int main(int argc, char *argv[])
 {
-
 	string InputFileName, OutputFileName;
 	ECUT_MODE eCUT_MODE = eECUT_MODE_AUTO;
-	unsigned int CutSize = 0;
-	unsigned int CutPoint = 0;
+	uint32_t CutSize = 0;
+	uint32_t CutPoint = 0;
 
 	int opt = 0;
-	while(-1 != (opt = getopt(argc, argv, "hi:o:m:b:p:"))) {
-		switch(opt) {
+	while(-1 != (opt = getopt(argc, argv, "hi:o:m:l:p:"))) {
+		switch(opt)
+		{
 			case 'i':
 				InputFileName = optarg;
 				break;
@@ -43,7 +49,7 @@ int main(int argc, char *argv[])
 				eCUT_MODE = static_cast<ECUT_MODE>(atoi(optarg));
 				break;
 
-			case 'b':
+			case 'l':
 				CutSize = atoi(optarg);
 				break;
 
@@ -69,12 +75,7 @@ int main(int argc, char *argv[])
 		printUsage(argv[0]);
 	}
 	// else if()
-	else {	// 파일 종료 후, 나오는 걸로...
-		printf("InputFileName: %s\n", InputFileName.c_str());
-		printf("OutputFileName: %s\n", OutputFileName.c_str());
-		printf("eCUT_MODE: %d\n", eCUT_MODE);
-		printf("CutSize: %d\n", CutSize);
-		printf("CutPoint: %d\n", CutPoint);
+	else {
 	}
 
 
@@ -87,23 +88,24 @@ int main(int argc, char *argv[])
 
 	// 읽어온 변수에 따라 fp 위치(fseek) 처리
 
-	int CutMode = 0;	// eCUT_MODE 처리
+	int CutMode = static_cast<int>(eCUT_MODE);	// eCUT_MODE 처리
 	CutPoint = 0;
 	fseek(fp, 0L, SEEK_END);	// 파일 사이즈
-	unsigned int FileLength = ftell(fp);
-	printf("FileLength: %uB, %dKB, %dMB\n", FileLength, FileLength/1024, FileLength/(1024*1024));
+	uint32_t FileLength = ftell(fp);
+	printf("FileLength: %uB, %dKB, %dMB\n", FileLength, FileLength/1024, FileLength/(BUFFER_SIZE));
 	fseek(fp, CutPoint, CutMode);
 
 
-	// TODO : CutSize 처리 (아마 입력 시 예외처리??)
-	CutSize = FileLength;
+	// TODO : CutSize 처리 (입력 시 예외처리)
+	// CutSize = FileLength;
 	char *Buffer = NULL;
 
 	// progress 표시하는거 어떻게 하는겨?
 
 	if(CutSize && CutSize <= FileLength) {
-		if(CutSize < 1024*1024) {
+		if(CutSize < BUFFER_SIZE) {
 			Buffer = new char[CutSize];
+			assert(Buffer);
 			fread(Buffer, CutSize, 1, fp);
 			fwrite(Buffer, CutSize, 1, ofp);
 		}
@@ -111,19 +113,20 @@ int main(int argc, char *argv[])
 			fclose(ofp);
 			ofp = fopen(OutputFileName.c_str(), "ab");
 			if(!ofp) {
-				puts("Fail to write in file1");
+				puts("Fail to write in file");
 				return -1;
 			}
 
-			Buffer = new char[1024*1024];
-			unsigned int RemainSize = CutSize;
+			Buffer = new char[BUFFER_SIZE];
+			assert(Buffer);
+			uint32_t RemainSize = CutSize;
 			int nR, nW = 0;
 
 			while(RemainSize) {
-				if(RemainSize > 1024*1024) {
-					nR = fread(Buffer, 1024*1024, 1, fp);
-					nW = fwrite(Buffer, 1024*1024, 1, ofp);
-					RemainSize -= 1024*1024;
+				if(RemainSize > BUFFER_SIZE) {
+					nR = fread(Buffer, BUFFER_SIZE, 1, fp);
+					nW = fwrite(Buffer, BUFFER_SIZE, 1, ofp);
+					RemainSize -= BUFFER_SIZE;
 				}
 				else {
 					nR = fread(Buffer, RemainSize, 1, fp);
@@ -132,7 +135,7 @@ int main(int argc, char *argv[])
 				}
 
 				if(nR != nW || nR <= 0 || nW <= 0) {
-					puts("Fail to write in file3");
+					puts("Fail to write in file");
 					return -1;
 				}
 			}
@@ -143,10 +146,20 @@ int main(int argc, char *argv[])
 	fclose(fp);
 	fclose(ofp);
 
+	string CutModeString("");
+	string CutSizeString("");
+	getCutModeString(CutModeString, (ECUT_MODE)eCUT_MODE);
+	getSizeByUnit(CutSizeString, CutSize);
+
+	// 실행 결과 출력
+	printf("InputFileName: %s\n", InputFileName.c_str());
+	printf("OutputFileName: %s\n", OutputFileName.c_str());
+	printf("CutMode: %s\n", CutModeString.c_str());
+	printf("CutSize: %s\n", CutSizeString.c_str());
+	// printf("CutPoint: %d\n", CutPoint);
 
 	return 0;
 }
-
 
 
 void printUsage(char *fc)
@@ -154,7 +167,81 @@ void printUsage(char *fc)
 	printf("[Usage] %s:\n", fc);
 	puts("\t-i : input file name");
 	puts("\t-o : output file name");
-	puts("\t-m : file cut mode\te.g.,) 0: begin, 1: middle, 2:end");
+	puts("\t-m : file cut mode\te.g.,) 0: begin(default), 1: middle, 2:end");
 	puts("\t-b : file size for cut");
 	puts("\t-p : if MIDDLE in file cut mode, input starting point for cut");
+}
+
+void getCutModeString(string &strMode, ECUT_MODE eMode)
+{
+	strMode.clear();
+
+	switch(eMode)
+	{
+		case eECUT_MODE_MIDDLE:
+			strMode = "MIDDLE";
+			break;
+
+		case eECUT_MODE_END:
+			strMode = "END";
+			break;
+
+		case eECUT_MODE_BEGIN:
+		case eECUT_MODE_AUTO:
+			strMode = "BEGIN";
+			break;
+	}
+}
+
+void getSizeByUnit(string &strSize, uint32_t Size)
+{
+	strSize.clear();
+
+	double Divider = Size;
+	int Count = 0;
+
+	while(static_cast<int>(Divider / 1024)) {
+		Divider /= 1024;
+		Count++;
+		// 무한 루프 방지
+		if(Count > 10) break;
+	}
+
+	char tBuf[100] = {0,};
+
+	if(Count) {
+		sprintf(tBuf, "%.1f", Divider);
+	}
+	else {
+		sprintf(tBuf, "%d", static_cast<int>(Divider));
+	}
+
+	strSize = tBuf;
+
+	switch(Count)
+	{
+		case 0:
+			strSize.append("B");
+			break;
+
+		case 1:
+			strSize.append("KB");
+			break;
+
+		case 2:
+			strSize.append("MB");
+			break;
+
+		case 3:
+			strSize.append("GB");
+			break;
+
+		case 4:
+			strSize.append("TB");
+			break;
+
+		default:
+			strSize.append("B");
+			break;
+	}
 }
