@@ -114,6 +114,43 @@ int main(int argc, char** argv) {
 	std::cout << "EraseTest.end: " << (*itEraseTest) << std::endl;
 	std::cout << std::endl << std::endl << "=========================================" << std::endl << std::endl;
 
+	std::cout << std::endl << std::endl << "=============== insert test ===============" << std::endl << std::endl;
+
+	std::vector<int> tVector;
+	int tVectorSize = 43;
+	for(int i = 0; i < tVectorSize; i++) {
+		tVector.push_back(i);
+	}
+
+	const int FrequencyUnit = 5;
+	int Quotient = static_cast<int>(tVectorSize / FrequencyUnit);
+	int Remainder = tVectorSize % FrequencyUnit;
+	std::vector<std::vector<int>> m_vFrequency;
+
+	m_vFrequency.assign(Quotient, std::vector<int>(FrequencyUnit, 0));
+	for(int i = 0; i < Quotient; i++) {
+		for(int j = 0; j < FrequencyUnit; j++) {
+			m_vFrequency[i][j] = tVector[i * FrequencyUnit + j];
+		}
+	}
+
+	if(Remainder) {
+		m_vFrequency.push_back(std::vector<int>(Remainder, 0));
+		for(int i = 0; i < Remainder; i++) {
+			m_vFrequency[Quotient][i] = tVector[Quotient * FrequencyUnit + i];
+		}
+	}
+
+	puts("");
+
+	for(auto it = m_vFrequency.begin(); it != m_vFrequency.end(); it++) {
+		for(auto it2 = (*it).begin(); it2 != (*it).end(); it2++) {
+			std::cout << (*it2) << " ";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl << std::endl << "=========================================" << std::endl << std::endl;
+
 
 	if(argc != 2) {
 		std::cout << "Input compare number" << std::endl;
