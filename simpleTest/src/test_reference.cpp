@@ -7,7 +7,14 @@ class sharedPtr
 {
 public:
 	sharedPtr(T t) : p(NULL) {
-		if(p == NULL) p = new T(t);
+		if(p == NULL) {
+			try	{
+				p = new T(t);
+			}
+			catch(std::bad_alloc e) {
+				printf("%s\n", e.what());
+			}
+		}
 	};
 
 	~sharedPtr() {
@@ -33,7 +40,14 @@ void test(sharedPtr<int> &ref)
 
 int main() {
 
-	int *b = new int(1);
+	int *b = NULL;
+	try {
+		b = new int(1);
+	}
+	catch(std::bad_alloc e) {
+		printf("%s\n", e.what());
+	}
+
 	int* &c = b;
 
 	printf("b: %d\n", *b);
