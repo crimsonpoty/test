@@ -11,7 +11,13 @@ CXXFLAGS += -I$(BUILD_ROOT)/include
 CXXFLAGS += -std=c++11
 CXXFLAGS += $(filter-out -Wunused-parameter, $(CXXFLASG))
 
-.PHONY: all
+### compiler 설정
+CC = g++
+CROSS_COMPILE = /opt/crosstools/stbgcc-4.5.3-2.4/bin/mipsel-linux-uclibc-g++
+#CC = $(CROSS_COMPILE)
+
+
+.PHONY: all $(TARGET)
 
 all: $(TARGET)
 
