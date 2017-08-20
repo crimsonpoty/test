@@ -6,8 +6,8 @@ Created on 2017. 8. 20.
 @author: crims
 '''
 import sys
-from PyQt4.QtGui import *
-from PyQt4.QtCore import QCoreApplication
+from PyQt5.QtGui import *
+from PyQt5.QtCore import QCoreApplication
 # from PyQt4.QtGui import QApplication, QDialog, QLabel, QLineEdit, QPushButton,\
 #     QVBoxLayout
 

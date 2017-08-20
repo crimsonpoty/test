@@ -6,16 +6,18 @@ Created on 2017. 8. 19.
 @author: crims
 '''
 import sys
-from PyQt4.Qt import QApplication
-from PyQt4.QtGui import QWidget, QFileDialog, QLineEdit
+from PyQt5.Qt import QApplication
+from PyQt5.QtGui import QFileOpenEvent
+from PyQt5.QtWidgets import QWidget
 
 app = QApplication(sys.argv)
 
-w = QWidget()
+w = QWidget
 w.resize(700, 80)
 w.setWindowTitle("OpenFile")
 
-fileName = QFileDialog.getOpenFileName(w, 'Open File', '', '')    
+fileName = QFileDialog.getOpenFileName(w, 'Open File', '', '')
+fileName = QFileOpenEvent.openFile(QFile, Union)    
 
 print(len(fileName))
 
