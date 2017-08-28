@@ -9,7 +9,7 @@
 class CClass
 {
 public:
-	CClass();
+	CClass(std::string input);
 	bool Toggle(bool bBool);
 	std::string GetText();
 };

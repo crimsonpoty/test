@@ -8,7 +8,7 @@ using std::string;
 class CClass
 {
 public:
-	CClass();
+	CClass(string input);
 	bool Toggle(bool bBool);
 	string GetText();
 

@@ -1,8 +1,8 @@
 #include "Class.h"
 
-CClass::CClass()
+CClass::CClass(string input)
 {
-	m_str = "Hello World!";
+	m_str = input;
 }
 
 bool CClass::Toggle(bool bBool)
