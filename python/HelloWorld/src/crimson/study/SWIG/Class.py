@@ -1,4 +1,4 @@
-import cppClass
+import cppClass  # @UnresolvedImport
 
 a = cppClass.CClass("Hello")
 print(type(a))

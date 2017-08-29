@@ -1,4 +1,4 @@
-import cppMultiple
+import cppMultiple  # @UnresolvedImport
 
 
 print("Hello")
