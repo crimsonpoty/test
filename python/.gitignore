@@ -1,0 +1,18 @@
+# ignore list in Python
+
+### Pycache ###
+*.pyc
+
+### dll library ###
+*.pyd
+
+### C++ object ###
+*.o
+
+### generated CXX file in SWIG ###
+*.cxx
+
+### Project files ###
+*.project
+*.pydevproject
+*.prefs
