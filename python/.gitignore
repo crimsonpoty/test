@@ -16,3 +16,10 @@
 *.project
 *.pydevproject
 *.prefs
+
+### image files ###
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
