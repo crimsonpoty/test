@@ -1,4 +1,5 @@
 rem @echo off
+rem assume that source file(Sudoku.cpp) already was compiled in SRC_PATH.
 
 set OBJ_PATH="C:\Users\crims\workspace\repo\git\practice\sudoku_solution\Debug\src"
 set SRC_PATH="C:\Users\crims\workspace\repo\git\practice\sudoku_solution\src"
