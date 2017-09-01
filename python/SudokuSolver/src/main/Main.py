@@ -16,14 +16,14 @@ class Display(QDialog):
     def __init__(self):
         super().__init__()
         
-        # 스도쿠 숫자 및 그릠파일 변수 설정
+        # 스도쿠 숫자 및 그릠파일 변수 초기화
         self.numbers = "0" * 81
         self.fileName = ""
         
         # 윈도우 속성 설정
         self.title = "Sudoku Solver"
-        self.left = 800
-        self.top = 200
+        self.left = 100
+        self.top = 100
         self.width = 500
         self.height = 500
         
@@ -122,6 +122,11 @@ class Display(QDialog):
         btnSolve = QPushButton("Solve")
         btnClose = QPushButton("Close")
         
+        # 버튼 사이즈 조정
+        btnOpen.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        btnSolve.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        btnClose.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        
         # 이벤트 핸들러 등록
         btnOpen.clicked.connect(self.BtnOpenclicked)
         btnSolve.clicked.connect(self.BtnSolveclicked)
@@ -134,7 +139,7 @@ class Display(QDialog):
         
         self.horizontalGroupBox.setLayout(layout)
         
-    def openFileNameDialog(self):    
+    def openFileNameDialog(self):
         options = QFileDialog.Options()
         fileName, _ = QFileDialog.getOpenFileName \
             (self, "Open", "","PNG (*.png);;JPEG (*.jpg;*.jpeg);;Bitmap (*.bmp);;All File (*)", options=options)
