@@ -19,6 +19,8 @@ import TrimImage
 isMultipleImages = False
 
 
+# 숫자 인식(Digit Recognition) 예제 참조
+# 출처: https://stackoverflow.com/questions/9413216/simple-digit-recognition-ocr-in-opencv-python
 class DigitLearning():
     def __init__(self, imgData):
         # 이미지 데이터 변수 초기화

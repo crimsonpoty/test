@@ -10,6 +10,9 @@ import numpy as np
 import cv2
 import imutils
 
+
+# 숫자 인식(Digit Recognition) 예제 참조
+# 출처: https://stackoverflow.com/questions/9413216/simple-digit-recognition-ocr-in-opencv-python
 class DigitRecognition():
     def __init__(self, imgData, samplesDataPath, responsesDataPath):        
         # 이미지 데이터 변수 초기화
