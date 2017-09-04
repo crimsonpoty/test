@@ -13,7 +13,8 @@ import cv2
 import imutils
 
 
-class ShapeDetector:    # 윤곽 모양 구분 클래스 (출처: http://sosal.kr/1067 [so_sal])
+# 윤곽 모양 구분 클래스 (출처: http://sosal.kr/1067 [so_sal])
+class ShapeDetector:    
     def __init__(self):
         pass
     
@@ -78,7 +79,7 @@ class TrimImage():
             c = c.astype("int")
             [x,y,w,h] = cv2.boundingRect(c)
             
-            if 730 < w < 735 and 730 < h < 735:
+            if 730 < w < 735 and 730 < h < 735:     # 숫자가 있는 9x9의 정사각형의 크기: 732
                 if bFilteredImage:
                     retIm = self.thresh[y:y+h,x:x+w]
                 else:
@@ -91,3 +92,4 @@ class TrimImage():
 
 if __name__ == '__main__':
     pass
+
