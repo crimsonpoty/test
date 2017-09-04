@@ -29,7 +29,7 @@ class DigitRecognition():
         
         # 윤곽선 추출
         self.cnts = cv2.findContours(self.thresh.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-        self.cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+        self.cnts = self.cnts[0] if imutils.is_cv2() else self.cnts[1]
         
         # findContours의 결과는 우하단에서 부터 시작되기에 좌상단 시작으로 정렬
         self.cnts.sort(key=lambda x: self.get_contour_precedence(x, self.thresh.shape[1]))    
