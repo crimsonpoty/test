@@ -80,9 +80,10 @@ if __name__ == '__main__':
 
     if isMultipleImages:
         for i in range(1, 31):
-            imgList.append("pictures/IMG_%02d.png" % i)
+            imgList.append("pictures/hard/IMG_%02d.png" % i)
     else:
-          imgList.append("pictures/IMG_01.png")
+#           imgList.append("pictures/hard/IMG_01.png")
+        imgList.append("pictures/Easy_IMG_01.png")
     
     for s in imgList:
         print(s)
