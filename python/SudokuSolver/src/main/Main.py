@@ -164,13 +164,14 @@ class Display(QDialog):
         samplesPath = 'learning/data/DigitSamples.data'
         responsesPath = 'learning/data/DigitResponses.data'
 
-        # 숫자가 있는 9x9의 사각형 추출   
-        _t = TrimImage.TrimImage(imgPath)
-        im = _t.extract()
-          
-        # 추출된 사각형을 learning한 데이터를 사용하여 숫자 문자열로 받기   
-        _d = DigitRecognition.DigitRecognition(im, samplesPath, responsesPath)
-        self.setNumbers(_d.getSudokuString())
+        # 숫자가 있는 9x9의 사각형 추출
+        if imgPath:   
+            _t = TrimImage.TrimImage(imgPath)
+            im = _t.extract()
+              
+            # 추출된 사각형을 learning한 데이터를 사용하여 숫자 문자열로 받기   
+            _d = DigitRecognition.DigitRecognition(im, samplesPath, responsesPath)
+            self.setNumbers(_d.getSudokuString())
          
     @pyqtSlot()
     def BtnSolveclicked(self):
