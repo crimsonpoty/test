@@ -7,18 +7,22 @@ Created on 2017. 8. 31.
 '''
 
 import sys
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from cpp import cppSudoku 
+
+from cpp import cppSudoku
+from learning import TrimImage
+from learning import DigitRecognition
+
 
 class Display(QDialog):
     def __init__(self):
         super().__init__()
         
-        # 스도쿠 숫자 및 그릠파일 변수 초기화
+        # 스도쿠 숫자 초기화
         self.numbers = "0" * 81
-        self.fileName = ""
         
         # 윈도우 속성 설정
         self.title = "Sudoku Solver"
@@ -27,7 +31,7 @@ class Display(QDialog):
         self.width = 500
         self.height = 500
         
-        # 윈도우 제목 창 버튼 설정
+        # 윈도우 제목 창 버튼 설정(Hint 버튼(?) 제거)
         self.setWindowFlags(Qt.WindowCloseButtonHint)        
         
         self.initUI()
@@ -47,7 +51,7 @@ class Display(QDialog):
         windowLayout = QVBoxLayout()
         
         windowLayout.addWidget(self.gridGroupBox)
-        windowLayout.addWidget(self.horizontalGroupBox, 10000)
+        windowLayout.addWidget(self.horizontalGroupBox)
         windowLayout.setStretch(0, 5)
         windowLayout.setStretch(1, 1)
         self.setLayout(windowLayout)
@@ -142,20 +146,34 @@ class Display(QDialog):
     def openFileNameDialog(self):
         options = QFileDialog.Options()
         fileName, _ = QFileDialog.getOpenFileName \
-            (self, "Open", "","PNG (*.png);;JPEG (*.jpg;*.jpeg);;Bitmap (*.bmp);;All File (*)", options=options)
+            (self, "Open", "","PNG, JPEG, Bitmap (*.png;*.jpg;*.jpeg;*.bmp);;All File (*)", options=options)
+#             (self, "Open", "","PNG (*.png);;JPEG (*.jpg;*.jpeg);;Bitmap (*.bmp);;All File (*)", options=options)
+
         if fileName:
-            self.fileName = fileName
+            return fileName
     
     @pyqtSlot()
     def BtnOpenclicked(self):
-        # TODO: OpenCV 완료 이후 아래 주석 해제할 것
-#         self.openFileNameDialog()
-        strInput = "080000001000840300200010067020057009017000080090060075630000700070586000100009600"
-        self.setNumbers(strInput)
+        # for test
+#         strInput = "080000001000840300200010067020057009017000080090060075630000700070586000100009600"
+#         self.setNumbers(strInput)
+
+#         imgPath = 'C:/Users/crims/workspace/repo/git/test/python/SudokuSolver/src/main/learning/pictures/IMG_01.png'    # for test
         
+        imgPath = self.openFileNameDialog()
+        samplesPath = 'learning/data/DigitSamples.data'
+        responsesPath = 'learning/data/DigitResponses.data'
+
+        # 숫자가 있는 9x9의 사각형 추출   
+        _t = TrimImage.TrimImage(imgPath)
+        im = _t.extract()
+          
+        # 추출된 사각형을 learning한 데이터를 사용하여 숫자 문자열로 받기   
+        _d = DigitRecognition.DigitRecognition(im, samplesPath, responsesPath)
+        self.setNumbers(_d.getSudokuString())
+         
     @pyqtSlot()
     def BtnSolveclicked(self):
-        # for test
         if 0 == int(self.numbers):
             QMessageBox.information(self, "Hint", "Please, Open Sudoku Picture before press solve button")
         else:
