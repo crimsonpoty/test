@@ -6,9 +6,13 @@ BIN_DIR = $(CURRENT_DIR)/bin
 
 SRCS = $(sort $(notdir $(subst .cpp, , $(shell ls $(SRC_DIR)/*.cpp))))
 
-CPU_NUM = $(shell echo `cat /proc/cpuinfo | grep cores | wc -l`)
-MORE_CPU_NUM = 1
-BEST_NUM = $(shell expr $(CPU_NUM) + $(MORE_CPU_NUM))
+ifeq ($(findstring Linux, $(shell uname)), Linux)
+	CPU_NUM = $(shell echo `cat /proc/cpuinfo | grep cores | wc -l`)
+	MORE_CPU_NUM = 1
+	BEST_NUM = $(shell expr $(CPU_NUM) + $(MORE_CPU_NUM))
+else
+	BEST_NUM = 4
+endif
 
 
 
