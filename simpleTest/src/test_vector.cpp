@@ -152,6 +152,20 @@ int main(int argc, char** argv) {
 	std::cout << std::endl << std::endl << "=========================================" << std::endl << std::endl;
 
 
+	std::cout << std::endl << std::endl << "=============== replace test ===============" << std::endl << std::endl;
+
+	std::vector<int> replaceVector(9,1);
+	replaceVector[5] = 0;
+	for(auto & x: replaceVector)
+		std::cout << x;
+	std::cout << std::endl;
+	replaceVector[std::distance(replaceVector.begin(), std::find(replaceVector.begin(), replaceVector.end(), 0))] = 9;
+	for(auto & x: replaceVector)
+		std::cout << x;
+	std::cout << std::endl;
+
+	std::cout << std::endl << std::endl << "=========================================" << std::endl << std::endl;
+
 	if(argc != 2) {
 		std::cout << "Input compare number" << std::endl;
 		return -1;
@@ -208,6 +222,8 @@ int main(int argc, char** argv) {
 	for(auto it = Temp.begin(); it != Temp.end(); it++) {
 		std::cout << it->a << " " << it->b << " " << it->c << " " << std::endl;
 	}
+
+
 
 	return 0;
 }
