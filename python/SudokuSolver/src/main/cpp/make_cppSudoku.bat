@@ -8,9 +8,9 @@ set PY_LIB_PATH="C:\Users\crims\AppData\Local\Programs\Python\Python36-32\libs"
 
 if not exist "src" (mkdir "src")
 
-copy "%SRC_PATH%\MyDebug.h" src
-copy "%SRC_PATH%\Sudoku.h" src
-copy "%SRC_PATH%\Sudoku.cpp" src
+copy %SRC_PATH%"\MyDebug.h" src
+copy %SRC_PATH%"\Sudoku.h" src
+copy %SRC_PATH%"\Sudoku.cpp" src
 
 g++ -std=c++11 -O2 -Wall -c -fmessage-length=0 -o %OBJ_PATH%"\Sudoku.o" %OBJ_PATH%"\Sudoku.cpp" 
 
