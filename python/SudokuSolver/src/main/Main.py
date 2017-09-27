@@ -180,12 +180,12 @@ class Display(QDialog):
         else:
             _sudoku = cppSudoku.CSudoku()
             _sudoku.Input(self.numbers)
-            result = _sudoku.Solve()
+            _sudoku.Solve()
             
-            if(result):
+            if(_sudoku.Inspection()):
                 self.setNumbers(_sudoku.GetSolvedSudoku())
             else:
-                QMessageBox.warning(self, "Warning", "Solved Result is False")
+                QMessageBox.warning(self, "Warning", "Can not Solved")
 
 
 if __name__ == '__main__':

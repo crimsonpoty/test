@@ -12,5 +12,6 @@ public:
 	CSudoku();
 	void Input(std::string InputStr);
 	bool Solve();
+	bool Inspection();
 	std::string GetSolvedSudoku();
 };
