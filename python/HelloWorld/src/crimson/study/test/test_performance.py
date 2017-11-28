@@ -1,8 +1,14 @@
-import time
+from time import time
 
-start_time = time.time()
 
-for i in range(10 ** 8):
-	pass
+def test_loop(count):
+	start_time = time()
+	
+	for i in range(10 ** count): pass
+	
+	return time() - start_time
 
-print(str(time.time() - start_time))
+
+if __name__ == '__main__':
+	for i in range(10):
+		print("10-e{:02d}: {}".format(i, test_loop(i)))
