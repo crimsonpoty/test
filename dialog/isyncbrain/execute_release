@@ -1,0 +1,353 @@
+#!/bin/sh
+
+#############################################################################################################
+# svn repositorys path : !! Don't Move Position of Variables !!
+#############################################################################################################
+project_repo_root="svn+ssh://172.16.3.60/opt/svnsrc/isb_engine"
+
+trunk_repo=$project_repo_root"/trunk"
+branches_repo=$project_repo_root"/branches"
+tags_repo=$project_repo_root"/tags"
+
+#############################################################################################################
+# Etc settings : !! Don't Move Position of Variables !!
+#############################################################################################################
+# Variables settings
+: ${DIALOG_OK=0}
+: ${DIALOG_CANCEL=1}
+: ${DIALOG_EXTRA=3}
+: ${DIALOG_ESC=255}
+
+: ${SIG_NONE=0}
+: ${SIG_HUP=1}
+: ${SIG_INT=2}
+: ${SIG_QUIT=3}
+: ${SIG_KILL=9}
+: ${SIG_TERM=15}
+
+# Temporary files settings
+tempfile=`tempfile 2>/dev/null` || tempfile=/tmp/test$$
+output=`tempfile 2>/dev/null` || output=/tmp/output$$
+
+trap "rm -f $tempfile" 0 $SIG_NONE $SIG_HUP $SIG_INT $SIG_TRAP $SIG_TERM
+
+
+#############################################################################################################
+# svn command parameter settings : !! Don't Move Position of Variables !!
+#############################################################################################################
+# Commands
+svn_list_commmand="svn list "
+
+# Lists for dialog
+BranchesRadioList=$svn_list_commmand$branches_repo
+TagsRadioList=$svn_list_commmand$tags_repo
+
+#############################################################################################################
+# Global Variable : : !! Don't Move Position of Variables !!
+#############################################################################################################
+GotoBack=0
+
+BRANCH_OR_TAG=""
+RELEASE_VERSION=""
+# SELECTED_DRIVER=""
+
+# for list item count
+DirectoryCount=0
+
+# Strings for Dialog
+SPACEBAR_USE=" If you want to Select/UnSelect Item(s), \n Press [Space Bar] in focused item. \n and you can move focus of item by arrow keys."
+BACK_USE=" If you want to move to previous dialog, Select [Back]."
+ESC_USE=" If you want to exit this dialog, Press [Esc]."
+
+#############################################################################################################
+# Functions
+#############################################################################################################
+# Dialog Button and Key Process Function 
+# ${1} : return value
+ReturnValueCheck() {
+GotoBack=0
+	case ${1} in
+	  $DIALOG_OK)
+		echo "Result: `cat $tempfile`";;
+	  $DIALOG_CANCEL)
+		echo "Cancel pressed."; 
+		rm $tempfile
+		rm $output
+		exit 0;;
+	  $DIALOG_EXTRA)
+		echo "Back pressed.";GotoBack=1;;
+	  $DIALOG_ESC)
+		if test -s $tempfile ; then
+		  cat $tempfile
+		else
+		  echo "ESC pressed."
+		fi
+		rm $tempfile
+		rm $output
+		exit 0;;
+	esac
+}
+
+# Directory Find Function in Multi-line File list
+# ${1} : input file had multi-line 
+# ${2} : output file
+# ${3} : init value
+FindDirectory() {
+	DirectoryCount=0
+	
+	${1} >$tempfile
+
+	# Read multi-line in tempfile, one line to text variable in one loop
+	while true
+	do
+		read text
+		if [ "$text" = "" ]; then
+			break
+		fi
+
+		# Find Folders
+		PositionOfSlash=`expr index "$text" /`
+		TextLength=`expr length "$text"`
+		if [ $PositionOfSlash = $TextLength ]; then
+			let NewTextLength=TextLength-1
+			# Eliminate '/'
+			newtext=`expr substr "$text" 1 $NewTextLength`
+			((DirectoryCount = DirectoryCount + 1))
+			
+			# Find Init Value
+			found=0
+			for init_value in ${3}
+			do
+				if [ "$newtext" = "$init_value" ]; then
+					found=1
+				fi
+			done
+			
+			# Write Folder List to output file
+			if [ "$found" = "1" ]; then
+				echo "$newtext \"\"  on" >> ${2}		
+			else
+				echo "$newtext \"\"  off" >> ${2}
+			fi
+		fi
+	done <$tempfile
+	
+	if [ $DirectoryCount = "0" ]; then
+		echo " Can't Find Item(s) !  Please Check Repository !"
+		exit 0
+	fi
+}	
+
+
+## 다이얼로그 순서
+# 1. 브랜치 | 태그 선택
+# 2. 브랜치 릴리즈 버전 확인(Tags와 Branches의 버전 동기화를 위해 Branches만 보여줌)
+# 3. 버전명,리비전 입력 및 기본 버전 출력
+# 4. 입력 정보 확인(브랜치|태그, 입력 버전 정보)하고 svn 명령어 실행
+
+#############################################################################################################
+# Dialog Code Start (functions)
+#############################################################################################################
+#############################################################################################################
+# 1st Dialog: Select Branch or Tag
+#############################################################################################################
+first_dialog()
+{
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=55
+	DIALOG_HEIGHT=13
+	LIST_ITEM_COUNT=2
+
+	# Display radiolist dialog
+	# '2> $tempfile' In dialog command tail means redirect standard error stream(2) into a temporary file  
+	if [ $BRANCH_OR_TAG == "Tag" ];then
+		dialog --title "Select branch or tag" \
+		--radiolist "\n$SPACEBAR_USE" $DIALOG_HEIGHT $DIALOG_WIDTH $LIST_ITEM_COUNT \
+		Branch "Release to branch" off Tag "Release to tag" on 2> $tempfile
+	else
+		dialog --title "Select branch or tag" \
+		--radiolist "\n$SPACEBAR_USE" $DIALOG_HEIGHT $DIALOG_WIDTH $LIST_ITEM_COUNT \
+		Branch "Release to branch" on Tag "Release to tag" off 2> $tempfile
+	fi
+
+	ReturnValue=$?
+	ReturnValueCheck $ReturnValue
+
+	BRANCH_OR_TAG=$(cat $tempfile)
+
+	# Next Dialog: Check release versions
+	second_dialog
+}
+
+#############################################################################################################
+# 2nd Dialog: Check release versions
+#############################################################################################################
+second_dialog()
+{
+	# Initialize tempfiles
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=23
+
+	FindDirectory "$BranchesRadioList" $output ""
+	ListItemCount=$DirectoryCount
+
+	# Display checklist dialog
+	dialog	--title "Check release versions" \
+			--extra-button --extra-label "Back" \
+			--checklist "\n You can see release versions\n\n$BACK_USE\n$ESC_USE \n\n branches version below as:" \
+			$DIALOG_HEIGHT $DIALOG_WIDTH $ListItemCount --file $output 2> $tempfile
+
+	ReturnValue=$?
+	ReturnValueCheck $ReturnValue
+
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		first_dialog
+	fi
+	
+	# Next Dialog: Input release version
+	third_dialog
+}
+
+##############################################################################################################
+# 3rd Dialog: Input release version
+#############################################################################################################
+third_dialog()
+{
+	# Initialize tempfiles
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=20
+
+	# Display inputbox dialog
+	dialog	--title "Input release version" \
+			--extra-button --extra-label "Back" \
+			--inputbox "\n$BACK_USE\n$ESC_USE \n\n \
+			Must input relesae version like 0.01.01 :" \
+			$DIALOG_HEIGHT $DIALOG_WIDTH $RELEASE_VERSION 2> $tempfile
+
+	ReturnValue=$?
+	ReturnValueCheck $ReturnValue
+
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		second_dialog
+	fi
+	
+	# Trim blanks in RELEASE VERSION
+	cat $tempfile | sed 's/ //g' | sed 's/  //g' > $output
+	RELEASE_VERSION=$(cat $output)
+	
+	# Check the release version is empty
+	if [ "$RELEASE_VERSION" = "" ]; then
+		third_dialog
+	fi
+			
+	# Check release version conflict
+	if [ $BRANCH_OR_TAG == "Tag" ]; then
+		$TagsRadioList >$tempfile
+	else
+		$BranchesRadioList >$tempfile
+	fi
+
+	while true
+	do
+		read text
+		if [ "$text" = "" ]; then
+			break
+		fi
+
+		# Find Folders
+		PositionOfSlash=`expr index "$text" /`
+		TextLength=`expr length "$text"`
+		if [ $PositionOfSlash = $TextLength ]; then
+			let ProjectNameLength=TextLength-1
+			# Eliminate '/'
+			FindProjectName=`expr substr "$text" 1 $ProjectNameLength`
+			if [ $FindProjectName = $RELEASE_VERSION ]; then
+				DIALOG_WIDTH=50
+				DIALOG_HEIGHT=6
+
+				# Display Project Conflict Message box
+				dialog 	--title "WARNING!" \
+						--msgbox "This release version [$RELEASE_VERSION] exist already ! \n Please rename !" \
+					$DIALOG_HEIGHT $DIALOG_WIDTH
+					
+				third_dialog
+			fi
+		fi
+	done <$tempfile
+
+	# Next Dialog : Confirm release information
+	last_dialog
+}
+
+#############################################################################################################
+# Last Dialog: Confirm release information
+#############################################################################################################
+last_dialog() {
+	cat /dev/null > $tempfile	
+	cat /dev/null > $output
+	
+	DIALOG_WIDTH=60
+	DIALOG_HEIGHT=14
+
+	# Display yesno dialog
+	dialog 	--title "Confirm" \
+			--extra-button --extra-label "Back" \
+			--yesno "\n  Your Selections are \n \
+		- Release type : [$BRANCH_OR_TAG] \n \
+		- Release version: [$RELEASE_VERSION] \n\n \
+		Do you want to release project as this settings! \n\n $ESC_USE \n $BACK_USE" \
+		$DIALOG_HEIGHT $DIALOG_WIDTH
+
+	ReturnValue=$?
+	ReturnValueCheck $ReturnValue
+
+	# Back Button Check
+	if [ "$GotoBack" = "1" ]; then
+		third_dialog
+	fi
+	
+	# Start svn auto commands
+	process_svn_commands
+	
+	# Must Exit
+	exit 0
+}
+
+#############################################################################################################
+# Auto commands Step 1 (non Dialog) : Process svn commmads
+#############################################################################################################
+process_svn_commands() {
+	# 입력 변수: ${1} branc|tag ${2} RELEASE_VERSION
+	# 입력 변수에 따라 RELEASE_VERSION에 해당하는 
+
+	# Create branch or tag
+	if [ $BRANCH_OR_TAG == "Branch" ]; then
+		dest_repo=$branches_repo
+		dest_dir="/home/ENGINE_DEV/isyncbrain"
+	elif [ $BRANCH_OR_TAG == "Tag" ]; then
+		dest_repo=$tags_repo
+		dest_dir="/home/ENGINE/isyncbrain"
+	fi
+
+	svn copy $trunk_repo $dest_repo"/"$RELEASE_VERSION -m "Create $BRANCH_OR_TAG $RELEASE_VERSION"
+
+	# Move directory and change version
+	cd $dest_dir
+	svn switch $dest_repo"/"$RELEASE_VERSION
+}
+
+
+#############################################################################################################
+# Program Start Point
+#############################################################################################################
+first_dialog
+
+exit 0
