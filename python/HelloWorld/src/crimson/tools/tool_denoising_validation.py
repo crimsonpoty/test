@@ -12,7 +12,7 @@ from tkinter import filedialog
 
 
 # add paths
-root_path = "{}/../../../src".format(os.getcwd())
+root_path = "/home/ywkim/nfs/workspace/isyncbrain_denoise/src"
 sys.path.append("{}/eeglab/popfunc".format(root_path))
 sys.path.append("{}/eeglab/adminfunc".format(root_path))
 sys.path.append("{}/eeglab/sigprofunc".format(root_path))
@@ -334,7 +334,7 @@ def save_file(dialog_title):
 ## Run SNR calculation
 def run_time():
 	## assign path and load file list
-	root_path = "{}/snr_test/time".format(os.getcwd())
+	root_path = "{}/time".format(os.getcwd())
 	
 	'''
 	## for test
@@ -407,7 +407,7 @@ def run_time():
 def run_freq():
 	'''
 	## for test
-	root_path = "{}/snr_test/fft".format(os.getcwd())
+	root_path = "{}/fft".format(os.getcwd())
 # 	files_raw_data = ['{}/raw/701 EO_001.txt'.format(os.getcwd())]
 	files_cln_data = ['{}/engine/701 EO_001.txt'.format(root_path)]
 	files_man1_data = ['{}/manual1/701 EO_001.txt'.format(root_path)]
@@ -540,7 +540,7 @@ def run_freq():
 
 def run_icc(str):
 	
-	root_path = "{}/snr_test/{}".format(os.getcwd(), str)
+	root_path = "{}/{}".format(os.getcwd(), str)
 	if str == 'time':
 		result_file_name = "{}/result_for_time.txt".format(root_path)
 		output_file_name = "{}/result_icc_for_time.txt".format(root_path)
@@ -589,7 +589,7 @@ def run_icc(str):
 
 def reshape_for_time():
 	## assign path and load file list
-	root_path = "{}/snr_test/time".format(os.getcwd())
+	root_path = "{}/time".format(os.getcwd())
 	
 	path_cln_data = "{}/engine".format(root_path)
 	files_cln_data = ["{}/{}".format(path_cln_data, f) for f in os.listdir(path_cln_data) if f[-3:] == 'txt']
